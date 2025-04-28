@@ -1,12 +1,10 @@
-import {RouterProvider} from "@tanstack/react-router";
+import { RouterProvider } from '@tanstack/react-router'
 
 function App() {
+  const peter = 'klaus'
+  const auth = peter
 
-  const peter = "klaus"
-
-  return (
-    <RouterProvider router={router} context={{auth}}/>
-  )
+  return <RouterProvider router={router} context={{ auth }} />
 }
 
 export default App
