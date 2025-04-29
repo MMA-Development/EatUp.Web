@@ -1,3 +1,4 @@
+import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.tsx'
 import { createRootRouteWithContext, createRouter } from '@tanstack/react-router'
 import { Root } from './routes/root.tsx'
 import { authRoute } from '@app/routes/auth/auth-route.tsx'
@@ -22,7 +23,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
 
 export const routeTree = rootRoute.addChildren([
   authRoute.addChildren([loginRoute]),
-  dashboardRoute.addChildren([indexRoute])
+  dashboardRoute.addChildren([indexRoute, mealsRoute])
 ])
 
 export const router = createRouter({
