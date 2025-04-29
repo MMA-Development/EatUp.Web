@@ -1,12 +1,14 @@
-import i18next from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import daCommon from '@locales/da/da.common.json'
-import enCommon from '@locales/en/en.common.json'
 import daAuth from '@features/auth/locale/da.json'
 import enAuth from '@features/auth/locale/en.json'
+import daCommon from '@locales/da/da.common.json'
+import daZod from '@locales/da/da.zod.json'
+import enCommon from '@locales/en/en.common.json'
+import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import { initReactI18next } from 'react-i18next'
 import { z } from 'zod'
-import { i18nErrorMap } from '@lib/zod-error-map.ts'
+import { makeZodI18nMap } from 'zod-i18n-map'
+import enZod from 'zod-i18n-map/locales/en/zod.json'
 
 await i18next
   .use(LanguageDetector)
@@ -19,11 +21,13 @@ await i18next
     resources: {
       en: {
         common: enCommon,
-        auth: enAuth
+        auth: enAuth,
+        zod: enZod
       },
       da: {
         common: daCommon,
-        auth: daAuth
+        auth: daAuth,
+        zod: daZod
       }
     },
     detection: {
@@ -32,6 +36,9 @@ await i18next
     }
   })
 
-z.setErrorMap(i18nErrorMap)
-
+z.setErrorMap(
+  makeZodI18nMap({
+    ns: ['zod', 'auth'] // look first in zod, then in auth
+  })
+)
 export default i18next
