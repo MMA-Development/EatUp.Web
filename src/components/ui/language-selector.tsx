@@ -19,7 +19,8 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
     ]
   })
 
-  const currentLang = languages.items.find(lang => lang.value === i18n.language) || languages.items[0]
+  const currentLang =
+    languages.items.find((lang) => lang.value === i18n.language) || languages.items[0]
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang)
