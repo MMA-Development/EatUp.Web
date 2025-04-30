@@ -1,9 +1,8 @@
-import { useLoaderData, useLocation, useNavigate, useSearch } from '@tanstack/react-router'
 import { Badge, ButtonGroup, Flex, HStack, IconButton, Pagination, Table } from '@chakra-ui/react'
+import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 
 export function MealList() {
-  const location = useLocation()
   const navigate = useNavigate()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
@@ -50,7 +49,7 @@ export function MealList() {
       <Pagination.Root
         onPageChange={(page) =>
           navigate({
-            to: location.pathname,
+            to: '/dashboard/meals',
             search: () => ({ page: page.page - 1 })
           })
         }
