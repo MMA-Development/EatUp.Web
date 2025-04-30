@@ -6,6 +6,7 @@ import { Toaster } from '@components/ui/toaster.tsx'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@store/index.ts'
 import { PersistGate } from 'redux-persist/integration/react'
+import '../../node_modules/flag-icons/css/flag-icons.min.css'
 
 export function Providers({ children }: PropsWithChildren) {
   return (
