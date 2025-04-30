@@ -1,11 +1,11 @@
-import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.tsx'
+import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.ts'
 import { createRootRouteWithContext, createRouter } from '@tanstack/react-router'
 import { Root } from './routes/root.tsx'
 import { authRoute } from '@app/routes/auth/auth-route.tsx'
 import { loginRoute } from '@app/routes/auth/login-route.ts'
-import { dashboardRoute } from '@app/routes/dashboard/dashboard-route.tsx'
-import { indexRoute } from '@app/routes/dashboard/index-route.tsx'
+import { dashboardRoute } from '@app/routes/dashboard/dashboard-route.ts'
 import { Auth } from '@features/auth/store'
+import { createMealRoute } from '@app/routes/dashboard/meals/create-meal-route.tsx'
 
 export interface RouterContext {
   auth: Auth
@@ -13,17 +13,12 @@ export interface RouterContext {
 
 // This should not render any layout. Just acts as a placeholder
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
-  component: Root,
-  onEnter: () => {
-    router.navigate({
-      to: '/dashboard'
-    })
-  }
+  component: Root
 })
 
 export const routeTree = rootRoute.addChildren([
   authRoute.addChildren([loginRoute]),
-  dashboardRoute.addChildren([indexRoute, mealsRoute])
+  dashboardRoute.addChildren([mealsRoute.addChildren([createMealRoute])])
 ])
 
 export const router = createRouter({

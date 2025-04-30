@@ -1,7 +1,20 @@
-import { Box, Button, Flex, Separator, Stack } from '@chakra-ui/react'
-import { Brand } from '@components/ui/brand.tsx'
+import {
+  Accordion,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Icon,
+  IconButton,
+  Separator,
+  Span,
+  Stack,
+  Text
+} from '@chakra-ui/react'
 import { Breadcrumbs } from '@components/ui/breadcrumbs.tsx'
 import { Outlet, useNavigate } from '@tanstack/react-router'
+import { LogoutButton } from '@features/auth/components/logout-button.tsx'
+import { LuFactory, LuSalad } from 'react-icons/lu'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -13,22 +26,102 @@ export function DashboardLayout() {
         as="aside"
         w="240px"
         h="100%"
-        bg="gray.100"
-        borderRight="1px"
-        borderColor="gray.200"
+        bg="gray.50"
+        borderRight="1px solid"
+        borderRightColor="border"
       >
-        <Flex mt={2}>
-          <Brand />
+        <Flex my={4}>
+          <HStack>
+            <IconButton size={'xs'} rounded={'lg'} pointerEvents={'none'}>
+              <LuFactory />
+            </IconButton>
+            <Stack gap={0}>
+              <Text textStyle={'sm'} color={'fg'} fontWeight={'semibold'}>
+                Super Brugsen
+              </Text>
+              <Text textStyle={'xs'} color={'fg.muted'}>
+                Supermarked
+              </Text>
+            </Stack>
+          </HStack>
         </Flex>
-        <Separator />
-        <Stack mt={4}>
-          <Button onClick={() => navigate({ to: '/dashboard' })}>Dashboard</Button>
-          <Button onClick={() => navigate({ to: '/dashboard/meals' })}>Meals</Button>
+        <Stack mt={8}>
+          <Text textStyle={'xs'} color={'fg.muted'}>
+            Dashboard
+          </Text>
+          <Button
+            size={'sm'}
+            rounded={'lg'}
+            variant={'ghost'}
+            justifyContent={'flex-start'}
+            onClick={() => navigate({ to: '/dashboard' })}
+          >
+            Dashboard
+          </Button>
+        </Stack>
+
+        <Stack my={2}>
+          <Text textStyle={'xs'} color={'fg.muted'}>
+            Måltids håndtering
+          </Text>
+          <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
+            <Accordion.Item value={'meal'}>
+              <Accordion.ItemTrigger asChild w={'100%'}>
+                <Button
+                  w={'100%'}
+                  size={'sm'}
+                  rounded={'lg'}
+                  variant={'ghost'}
+                  justifyContent={'flex-start'}
+                >
+                  <Icon fontSize="lg" color="fg.subtle">
+                    <LuSalad />
+                  </Icon>
+                  <Span textStyle={'sm'}>Måltider</Span>
+                  <Accordion.ItemIndicator ml={'auto'} />
+                </Button>
+              </Accordion.ItemTrigger>
+              <Accordion.ItemContent pt={2}>
+                <Stack flexDirection={'row'} ml={6}>
+                  <Separator orientation="vertical" h={10} />
+                  <Accordion.ItemBody p={0} w={'100%'}>
+                    <Button
+                      w={'100%'}
+                      size={'sm'}
+                      rounded={'lg'}
+                      variant={'ghost'}
+                      justifyContent={'flex-start'}
+                      onClick={() => navigate({ to: '/dashboard/meals/create' })}
+                    >
+                      Opret
+                    </Button>
+                  </Accordion.ItemBody>
+                </Stack>
+                <Stack flexDirection={'row'} ml={6}>
+                  <Separator orientation="vertical" h={10} />
+                  <Accordion.ItemBody p={0} w={'100%'}>
+                    <Button
+                      w={'100%'}
+                      size={'sm'}
+                      rounded={'lg'}
+                      variant={'subtle'}
+                      justifyContent={'flex-start'}
+                      onClick={() => navigate({ to: '/dashboard/meals' })}
+                    >
+                      Oversigt
+                    </Button>
+                  </Accordion.ItemBody>
+                </Stack>
+              </Accordion.ItemContent>
+            </Accordion.Item>
+          </Accordion.Root>
+        </Stack>
+        <Stack position={'absolute'} bottom={12} mt={'auto'}>
+          <LogoutButton mt={'auto'} colorPalette={'red'} variant={'outline'} />
         </Stack>
       </Box>
 
       <Flex flex="1" flexDirection="column">
-        {/* Topbar */}
         <Box
           as="header"
           h="64px"
@@ -42,7 +135,7 @@ export function DashboardLayout() {
           <Breadcrumbs />
         </Box>
 
-        <Box flex="1" p="4" bg="gray.50">
+        <Box flex="1" p="4">
           <Outlet />
         </Box>
       </Flex>
