@@ -5,6 +5,10 @@ export interface ApiPagination {
   limit: number
 }
 
+export interface ApiPaginationWithSearch extends ApiPagination {
+  query?: string
+}
+
 export interface PaginatedResponse<T> {
   items: T[]
   page: number
