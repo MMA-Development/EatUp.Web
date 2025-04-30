@@ -1,13 +1,12 @@
 import { Flex, Input, InputGroup, Kbd } from '@chakra-ui/react'
-import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
-import { BiSearch } from 'react-icons/bi'
 import { MealList } from '@features/meals/components/meal-list.tsx'
-import { useInputFocusHotkey } from '@hooks/use-input-focus-hotkey.ts'
 import { useDebouncedState } from '@hooks/use-debounced-state.ts'
+import { useInputFocusHotkey } from '@hooks/use-input-focus-hotkey.ts'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import { useEffect } from 'react'
+import { BiSearch } from 'react-icons/bi'
 
 export function MealScreen() {
-  const location = useLocation()
   const navigate = useNavigate()
 
   const inputRef = useInputFocusHotkey()
@@ -17,10 +16,10 @@ export function MealScreen() {
 
   useEffect(() => {
     navigate({
-      to: location.pathname,
+      to: '/dashboard/meals',
       search: () => ({ query: searchValue })
     })
-  }, [searchValue, navigate, location.pathname])
+  }, [navigate, searchValue])
 
   return (
     <Flex direction={'column'}>
