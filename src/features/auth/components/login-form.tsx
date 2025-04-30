@@ -1,4 +1,4 @@
-import { Button, Field, Fieldset, Input, Stack } from '@chakra-ui/react'
+import { Button, Field, Fieldset, Input, Stack, Text } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,7 +13,7 @@ export function LoginForm() {
   const search = useSearch({ from: '/auth/login' })
   const navigate = useNavigate()
 
-  const [login, { isLoading }] = useAuthenticateMutation()
+  const [login, { isLoading, isError }] = useAuthenticateMutation()
 
   const {
     register,
@@ -57,6 +57,12 @@ export function LoginForm() {
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
+
+        {isError && (
+          <Text mt={1} color={'fg.error'}>
+            Der skete en fejl
+          </Text>
+        )}
 
         <Button loading={isLoading} type="submit" alignSelf="flex-start">
           {t('login')}
