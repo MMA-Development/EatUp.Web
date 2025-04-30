@@ -12,12 +12,24 @@ import {
   Text
 } from '@chakra-ui/react'
 import { Breadcrumbs } from '@components/ui/breadcrumbs.tsx'
-import { Outlet, useNavigate } from '@tanstack/react-router'
+import { ColorModeButton } from '@components/ui/color-mode.tsx'
+import { LanguageSelector } from '@components/ui/language-selector.tsx'
 import { LogoutButton } from '@features/auth/components/logout-button.tsx'
+import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 import { LuFactory, LuSalad } from 'react-icons/lu'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
+  const location = useRouterState({ select: (s) => s.location })
+
+  const { t } = useTranslation('common')
+
+  const { routesByPath } = useRouter()
+
+  const dashboardRoute = routesByPath['/dashboard']
+  const dashboardRoutes = Object.values(dashboardRoute.children ?? {})
+
   return (
     <Flex h="100vh" w="100vw">
       <Box
@@ -26,7 +38,7 @@ export function DashboardLayout() {
         as="aside"
         w="240px"
         h="100%"
-        bg="gray.50"
+        bg="bg.subtle"
         borderRight="1px solid"
         borderRightColor="border"
       >
@@ -82,36 +94,23 @@ export function DashboardLayout() {
                 </Button>
               </Accordion.ItemTrigger>
               <Accordion.ItemContent pt={2}>
-                <Stack flexDirection={'row'} ml={6}>
-                  <Separator orientation="vertical" h={10} />
-                  <Accordion.ItemBody p={0} w={'100%'}>
-                    <Button
-                      w={'100%'}
-                      size={'sm'}
-                      rounded={'lg'}
-                      variant={'ghost'}
-                      justifyContent={'flex-start'}
-                      onClick={() => navigate({ to: '/dashboard/meals/create' })}
-                    >
-                      Opret
-                    </Button>
-                  </Accordion.ItemBody>
-                </Stack>
-                <Stack flexDirection={'row'} ml={6}>
-                  <Separator orientation="vertical" h={10} />
-                  <Accordion.ItemBody p={0} w={'100%'}>
-                    <Button
-                      w={'100%'}
-                      size={'sm'}
-                      rounded={'lg'}
-                      variant={'subtle'}
-                      justifyContent={'flex-start'}
-                      onClick={() => navigate({ to: '/dashboard/meals' })}
-                    >
-                      Oversigt
-                    </Button>
-                  </Accordion.ItemBody>
-                </Stack>
+                {dashboardRoutes.map((route) => (
+                  <Stack flexDirection={'row'} ml={6}>
+                    <Separator orientation="vertical" h={10} />
+                    <Accordion.ItemBody p={0} w={'100%'}>
+                      <Button
+                        w={'100%'}
+                        size={'sm'}
+                        rounded={'lg'}
+                        variant={route.fullPath === location.pathname ? 'subtle' : 'ghost'}
+                        justifyContent={'flex-start'}
+                        onClick={() => navigate({ to: route.fullPath })}
+                      >
+                        {route.options.staticData?.name ? t(route.options.staticData.name) : ''}
+                      </Button>
+                    </Accordion.ItemBody>
+                  </Stack>
+                ))}
               </Accordion.ItemContent>
             </Accordion.Item>
           </Accordion.Root>
@@ -126,13 +125,17 @@ export function DashboardLayout() {
           as="header"
           h="64px"
           w="100%"
-          bg="white"
+          bg="bg"
           borderBottom="1px"
           borderColor="gray.200"
           px="4"
           alignContent={'center'}
         >
-          <Breadcrumbs />
+          <HStack>
+            <Breadcrumbs />
+            <LanguageSelector ml={'auto'} w={'200px'} />
+            <ColorModeButton/>
+          </HStack>
         </Box>
 
         <Box flex="1" p="4">
