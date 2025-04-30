@@ -1,3 +1,6 @@
+import { toaster } from '@components/ui/toaster.tsx'
+import { logout, setToken } from '@features/auth/store'
+import { LoginResponse } from '@features/auth/types'
 import type {
   BaseQueryFn,
   FetchArgs,
@@ -5,10 +8,9 @@ import type {
   FetchBaseQueryMeta
 } from '@reduxjs/toolkit/query'
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
-import { ZodError, ZodSchema } from 'zod'
+import { RootState } from '@store/types'
 import { isProduction } from '@utils/env.ts'
-import { toaster } from '@components/ui/toaster.tsx'
-import { logout, setAccessToken } from '@features/auth/store'
+import { ZodError, ZodSchema } from 'zod'
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL,
@@ -16,7 +18,14 @@ export const baseQuery = fetchBaseQuery({
     'Content-Type': 'application/json',
     'X-EatUp-Adm-Env': isProduction() ? 'Production' : 'Development'
   },
-  mode: 'cors'
+  mode: 'cors',
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).auth.token?.accessToken
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+    return headers
+  }
 })
 
 export const baseQueryWithValidation: BaseQueryFn<
@@ -43,11 +52,19 @@ export const baseQueryWithValidation: BaseQueryFn<
 
   if (result.error && result.error.status === 401) {
     // try to get a new token
-    const refreshResult = await baseQuery('/vendors/refresh', api, extraOptions)
+    const refreshResult = await baseQuery(
+      {
+        url: '/vendors/token',
+        method: 'POST',
+        body: `${(api.getState() as RootState).auth.token?.refreshToken}`
+      },
+      api,
+      extraOptions
+    )
     if (refreshResult.data) {
-      const token = (refreshResult.data as { token: string }).token
-      // store the new token
-      api.dispatch(setAccessToken(token))
+      const token = refreshResult.data as LoginResponse
+      // store the new tokens
+      api.dispatch(setToken(token))
       // retry the initial query
       result = await baseQuery(args, api, extraOptions)
     } else {
