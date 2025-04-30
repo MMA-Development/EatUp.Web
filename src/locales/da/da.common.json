@@ -30,5 +30,7 @@
   "validation.rules.atMostChars": "{{attribute}} må maksimum være {{max}} karakterer",
   "validation.rules.atLeastChars": "{{attribute}} skal minimum være {{min}} karakterer",
   "validation.rules.isRequired": "{{attribute}} er påkrævet",
-  "validation.rules.invalidType": "Ugyldig type"
+  "validation.rules.invalidType": "Ugyldig type",
+  "overview": "Overblik",
+  "create.meal": "Opret måltid"
 }

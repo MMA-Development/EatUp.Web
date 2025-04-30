@@ -1,11 +1,11 @@
-import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.ts'
-import { createRootRouteWithContext, createRouter } from '@tanstack/react-router'
-import { Root } from './routes/root.tsx'
 import { authRoute } from '@app/routes/auth/auth-route.tsx'
 import { loginRoute } from '@app/routes/auth/login-route.ts'
 import { dashboardRoute } from '@app/routes/dashboard/dashboard-route.ts'
+import { createMealRoute } from '@app/routes/dashboard/meals/create-meal-route.ts'
+import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.ts'
 import { Auth } from '@features/auth/store'
-import { createMealRoute } from '@app/routes/dashboard/meals/create-meal-route.tsx'
+import { createRootRouteWithContext, createRouter } from '@tanstack/react-router'
+import { Root } from './routes/root.tsx'
 
 export interface RouterContext {
   auth: Auth
@@ -18,7 +18,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
 
 export const routeTree = rootRoute.addChildren([
   authRoute.addChildren([loginRoute]),
-  dashboardRoute.addChildren([mealsRoute.addChildren([createMealRoute])])
+  dashboardRoute.addChildren([mealsRoute, createMealRoute])
 ])
 
 export const router = createRouter({
@@ -34,5 +34,11 @@ export const router = createRouter({
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
+  }
+}
+
+declare module '@tanstack/react-router' {
+  interface StaticDataRouteOption {
+    name?: string
   }
 }

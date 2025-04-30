@@ -48,7 +48,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
                 borderColor="border"
               >
                 <span
-                  className={`fib fi-dk fis`}
+                  className={`fib fi-${currentLang.countryCode} fis`}
                   style={{
                     width: '100%',
                     height: '100%',
