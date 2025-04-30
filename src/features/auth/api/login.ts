@@ -6,7 +6,7 @@ export const authenticate = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
     authenticate: builder.mutation<LoginResponse, LoginPayload>({
       query: (body) => ({
-        url: '/token',
+        url: '/vendors/signin',
         method: 'POST',
         body
       }),
@@ -17,10 +17,10 @@ export const authenticate = eatupApi.injectEndpoints({
         try {
           const { data } = await queryFulfilled
           dispatch(setUser(credentials.username))
-          dispatch(setToken(data.token))
+          dispatch(setToken(data))
         } catch {
-          dispatch(setUser('Matteo'))
-          dispatch(setToken('some token'))
+          dispatch(setUser(null))
+          dispatch(setToken(null))
         }
       }
     })
