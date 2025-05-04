@@ -9,13 +9,13 @@ import { z } from 'zod'
 
 const defaultValues = {
   query: '',
-  page: 0,
+  skip: 0,
   limit: 10
 }
 
 const MealRouteSearchSchema = z.object({
   query: z.string().optional(),
-  page: z.number().int().min(0).optional().default(defaultValues.page),
+  skip: z.number().int().min(0).optional().default(defaultValues.skip),
   limit: z.number().int().min(1).optional().default(defaultValues.limit)
 })
 
@@ -30,14 +30,14 @@ export const mealsRoute = createRoute({
   pendingComponent: () => Pending({ message: 'Overblik' }),
   // We separate search params from the loader to ensure caching/preloading works correctly
   // it makes the data uniquely tied to the URL and avoids bugs.
-  loaderDeps: ({ search: { page, limit, query } }) => ({ page, limit, query }),
-  loader: async ({ deps: { page, limit, query } }) => {
+  loaderDeps: ({ search: { skip, limit, query } }) => ({ skip, limit, query }),
+  loader: async ({ deps: { skip, limit, query } }) => {
     const res = await store
-      .dispatch(meals.endpoints.getMeals.initiate({ page, limit, query }))
+      .dispatch(meals.endpoints.getMeals.initiate({ skip, limit, query }))
       .unwrap()
     return {
       data: res.items,
-      page: res.page,
+      skip: res.skip,
       totalCount: res.totalCount,
       crumb: 'Meals'
     }
