@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export interface ApiPagination {
-  page: number
+  skip: number
   limit: number
 }
 

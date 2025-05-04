@@ -1,7 +1,10 @@
 import { Breadcrumb } from '@chakra-ui/react'
 import { isMatch, Link, useMatches } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 export function Breadcrumbs() {
+  const { t } = useTranslation()
+
   const matches = useMatches()
 
   if (matches.some((match) => match.status === 'pending')) return null
@@ -23,7 +26,7 @@ export function Breadcrumbs() {
                   <Breadcrumb.CurrentLink>{label}</Breadcrumb.CurrentLink>
                 ) : (
                   <Breadcrumb.Link asChild>
-                    <Link to={path}>{label}</Link>
+                    <Link to={path}>{label ? t(label) : label}</Link>
                   </Breadcrumb.Link>
                 )}
               </Breadcrumb.Item>

@@ -11,7 +11,7 @@ export const meals = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
     getMeals: builder.query<PaginatedResponse<Meal>, ApiPaginationWithSearch | void>({
       query: (pagination) => ({
-        url: `/meals?skip=${pagination?.page}&take=${pagination?.limit}${pagination && pagination.query ? `&search=${pagination.query}` : ''}`
+        url: `/meals?skip=${pagination?.skip}&take=${pagination?.limit}${pagination && pagination.query ? `&search=${pagination.query}` : ''}`
       }),
       extraOptions: {
         dataSchema: PaginatedResponseSchema(MealSchema)

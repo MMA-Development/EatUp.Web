@@ -6,7 +6,7 @@ export function MealList() {
   const navigate = useNavigate()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
-  const { page, limit } = useSearch({ from: '/dashboard/meals' })
+  const { skip, limit } = useSearch({ from: '/dashboard/meals' })
 
   return (
     <Flex direction={'column'}>
@@ -50,12 +50,12 @@ export function MealList() {
         onPageChange={(page) =>
           navigate({
             to: '/dashboard/meals',
-            search: () => ({ page: page.page - 1 })
+            search: () => ({ skip: page.page * limit })
           })
         }
         count={totalCount}
         pageSize={limit}
-        defaultPage={page + 1}
+        defaultPage={1}
       >
         <ButtonGroup variant="ghost" size="sm" w={'100%'}>
           <Pagination.PrevTrigger asChild>

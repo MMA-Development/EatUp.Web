@@ -17,6 +17,7 @@ import { LanguageSelector } from '@components/ui/language-selector.tsx'
 import { LogoutButton } from '@features/auth/components/logout-button.tsx'
 import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuSalad } from 'react-icons/lu'
 
 export function DashboardLayout() {
@@ -132,9 +133,13 @@ export function DashboardLayout() {
           alignContent={'center'}
         >
           <HStack>
+            <IconButton variant={'ghost'} size={'xs'}>
+              <FiSidebar />
+            </IconButton>
+            <Separator orientation="vertical" h={6} />
             <Breadcrumbs />
             <LanguageSelector ml={'auto'} w={'200px'} />
-            <ColorModeButton/>
+            <ColorModeButton />
           </HStack>
         </Box>
 
