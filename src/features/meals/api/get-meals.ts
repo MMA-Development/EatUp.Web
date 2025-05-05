@@ -21,4 +21,7 @@ export const meals = eatupApi.injectEndpoints({
 })
 
 export const { useGetMealsQuery } = meals
-export const { useQueryState: useGetMealQueryState } = meals.endpoints.getMeals
+export const {
+  useQueryState: useGetMealQueryState,
+  useQuerySubscription: useGetMealQuerySubscription
+} = meals.endpoints.getMeals

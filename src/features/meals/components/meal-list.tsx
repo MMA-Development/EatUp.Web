@@ -6,7 +6,7 @@ export function MealList() {
   const navigate = useNavigate()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
-  const { skip, limit } = useSearch({ from: '/dashboard/meals' })
+  const { limit } = useSearch({ from: '/dashboard/meals' })
 
   return (
     <Flex direction={'column'}>
@@ -47,10 +47,13 @@ export function MealList() {
       </Table.Root>
 
       <Pagination.Root
+        bottom={4}
+        position={'absolute'}
         onPageChange={(page) =>
           navigate({
             to: '/dashboard/meals',
-            search: () => ({ skip: page.page * limit })
+            search: (old) => ({ ...old, skip: (page.page - 1) * limit }),
+            replace: true
           })
         }
         count={totalCount}
@@ -59,21 +62,21 @@ export function MealList() {
       >
         <ButtonGroup variant="ghost" size="sm" w={'100%'}>
           <Pagination.PrevTrigger asChild>
-            <IconButton>
+            <IconButton rounded={'lg'}>
               <LuChevronLeft />
             </IconButton>
           </Pagination.PrevTrigger>
 
           <Pagination.Items
             render={(page) => (
-              <IconButton variant={{ base: 'ghost', _selected: 'outline' }}>
+              <IconButton rounded={'lg'} variant={{ base: 'ghost', _selected: 'outline' }}>
                 {page.value}
               </IconButton>
             )}
           />
 
           <Pagination.NextTrigger asChild>
-            <IconButton>
+            <IconButton rounded={'lg'}>
               <LuChevronRight />
             </IconButton>
           </Pagination.NextTrigger>

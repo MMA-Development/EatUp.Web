@@ -18,7 +18,7 @@ export type Meal = z.infer<typeof MealSchema>
 
 export const MealPayloadSchema = z
   .object({
-    vendorName: z.string().optional().default('Super Brugsen'),
+    vendorName: z.string().default('Super Brugsen'),
     title: z.string(),
     originalPrice: z.number(),
     price: z.number(),
@@ -66,4 +66,4 @@ export const MealPayloadSchema = z
     }
   })
 
-export type MealPayload = z.infer<typeof MealPayloadSchema>
+export type MealPayload = z.input<typeof MealPayloadSchema>

@@ -37,7 +37,7 @@ export const mealsRoute = createRoute({
       .unwrap()
     return {
       data: res.items,
-      skip: res.skip,
+      page: res.page,
       totalCount: res.totalCount,
       crumb: 'Meals'
     }

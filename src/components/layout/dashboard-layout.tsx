@@ -138,8 +138,8 @@ export function DashboardLayout() {
             </IconButton>
             <Separator orientation="vertical" h={6} />
             <Breadcrumbs />
-            <LanguageSelector ml={'auto'} w={'200px'} />
-            <ColorModeButton />
+            <LanguageSelector size={'sm'} ml={'auto'} w={'200px'} rounded={'lg'} />
+            <ColorModeButton variant={'outline'} rounded={'lg'} />
           </HStack>
         </Box>
 

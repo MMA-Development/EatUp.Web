@@ -22,8 +22,8 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
   const currentLang =
     languages.items.find((lang) => lang.value === i18n.language) || languages.items[0]
 
-  const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang)
+  const handleLanguageChange = async (lang: string) => {
+    await i18n.changeLanguage(lang)
   }
 
   return (
@@ -36,7 +36,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
     >
       <Select.HiddenSelect />
       <Select.Control>
-        <Select.Trigger>
+        <Select.Trigger rounded={'lg'}>
           <Select.ValueText>
             <HStack>
               <Flex
@@ -66,9 +66,9 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
       </Select.Control>
       <Portal>
         <Select.Positioner>
-          <Select.Content>
+          <Select.Content rounded={'lg'}>
             {languages.items.map((lang) => (
-              <Select.Item item={lang} key={lang.value} justifyContent="flex-start">
+              <Select.Item rounded={'lg'} item={lang} key={lang.value} justifyContent="flex-start">
                 <Flex
                   w="30px"
                   h="30px"

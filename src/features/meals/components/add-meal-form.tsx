@@ -14,10 +14,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 
 export function AddMealForm() {
-  const [addMeal, { isLoading, isError }] = useAddMealMutation()
+  const [addMeal, { isLoading }] = useAddMealMutation()
 
   const {
     register,
+    reset,
     control,
     formState: { errors },
     handleSubmit
@@ -28,6 +29,7 @@ export function AddMealForm() {
   async function onSubmit(data: MealPayload) {
     try {
       await addMeal(data)
+      reset()
     } catch (e) {
       console.error(e)
     }
