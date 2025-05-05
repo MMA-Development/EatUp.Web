@@ -22,7 +22,7 @@ export function MealScreen() {
   useEffect(() => {
     void navigate({
       to: '/dashboard/meals',
-      search: () => ({ query: searchValue }),
+      search: (old) => ({ query: searchValue, limit: old.limit }),
       replace: true
     })
   }, [navigate, searchValue])

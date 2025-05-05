@@ -198,25 +198,13 @@ export function AddMealForm() {
             Skabeloner
           </Heading>
 
-          <Button
-            size={'sm'}
-            variant={'outline'}
-            onClick={() => reset(data.items[0])}
-          >
+          <Button size={'sm'} variant={'outline'} onClick={() => reset(data.items[0])}>
             Klassisk måltidskasse
           </Button>
-          <Button
-            size={'sm'}
-            variant={'outline'}
-            onClick={() => reset(data.items[0])}
-          >
+          <Button size={'sm'} variant={'outline'} onClick={() => reset(data.items[0])}>
             Slagterens kød kasse
           </Button>
-          <Button
-            size={'sm'}
-            variant={'outline'}
-            onClick={() => reset(data.items[0])}
-          >
+          <Button size={'sm'} variant={'outline'} onClick={() => reset(data.items[0])}>
             Bland selv slik
           </Button>
         </Stack>

@@ -1,6 +1,25 @@
-import { Badge, ButtonGroup, Flex, HStack, IconButton, Pagination, Table } from '@chakra-ui/react'
+import {
+  Badge,
+  ButtonGroup,
+  createListCollection,
+  Flex,
+  HStack,
+  IconButton,
+  Pagination,
+  Portal,
+  Select,
+  Table
+} from '@chakra-ui/react'
 import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
+
+const limitList = createListCollection({
+  items: [
+    { label: '10', value: '10' },
+    { label: '25', value: '25' },
+    { label: '50', value: '50' }
+  ]
+})
 
 export function MealList() {
   const navigate = useNavigate()
@@ -60,28 +79,65 @@ export function MealList() {
         pageSize={limit}
         defaultPage={1}
       >
-        <ButtonGroup variant="ghost" size="sm" w={'100%'}>
-          <Pagination.PrevTrigger asChild>
-            <IconButton rounded={'lg'}>
-              <LuChevronLeft />
-            </IconButton>
-          </Pagination.PrevTrigger>
-
-          <Pagination.Items
-            render={(page) => (
-              <IconButton rounded={'lg'} variant={{ base: 'ghost', _selected: 'outline' }}>
-                {page.value}
+        <HStack>
+          <ButtonGroup variant="ghost" size="sm" w={'100%'}>
+            <Pagination.PrevTrigger asChild>
+              <IconButton rounded={'lg'}>
+                <LuChevronLeft />
               </IconButton>
-            )}
-          />
+            </Pagination.PrevTrigger>
 
-          <Pagination.NextTrigger asChild>
-            <IconButton rounded={'lg'}>
-              <LuChevronRight />
-            </IconButton>
-          </Pagination.NextTrigger>
-          <Pagination.PageText ml={'auto'} format="long" flex="1" />
-        </ButtonGroup>
+            <Pagination.Items
+              render={(page) => (
+                <IconButton rounded={'lg'} variant={{ base: 'ghost', _selected: 'outline' }}>
+                  {page.value}
+                </IconButton>
+              )}
+            />
+
+            <Pagination.NextTrigger asChild>
+              <IconButton rounded={'lg'}>
+                <LuChevronRight />
+              </IconButton>
+            </Pagination.NextTrigger>
+            <Pagination.PageText ml={'auto'} format="long" flex="1" />
+          </ButtonGroup>
+          <Select.Root
+            defaultValue={[String(limit)]}
+            onValueChange={(e) => {
+              navigate({
+                to: '/dashboard/meals',
+                search: (old) => ({ ...old, limit: Number(e.value[0]) }),
+                replace: true
+              })
+            }}
+            collection={limitList}
+            size="sm"
+            width="100px"
+          >
+            <Select.HiddenSelect />
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {limitList.items.map((item) => (
+                    <Select.Item item={item} key={item.value}>
+                      {item.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+        </HStack>
       </Pagination.Root>
     </Flex>
   )
