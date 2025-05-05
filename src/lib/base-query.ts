@@ -56,7 +56,7 @@ export const baseQueryWithValidation: BaseQueryFn<
       {
         url: '/vendors/token',
         method: 'POST',
-        body: `${(api.getState() as RootState).auth.token?.refreshToken}`
+        body: `"${(api.getState() as RootState).auth.token?.refreshToken}"`
       },
       api,
       extraOptions
