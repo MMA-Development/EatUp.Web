@@ -4,7 +4,7 @@ import { dashboardRoute } from '@app/routes/dashboard/dashboard-route.ts'
 import { createMealRoute } from '@app/routes/dashboard/meals/create-meal-route.ts'
 import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.ts'
 import { Auth } from '@features/auth/store'
-import { createRootRouteWithContext, createRouter } from '@tanstack/react-router'
+import { createRootRouteWithContext, createRouter, ErrorComponent } from '@tanstack/react-router'
 import { Root } from './routes/root.tsx'
 
 export interface RouterContext {
@@ -23,6 +23,7 @@ export const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({
   routeTree,
+  defaultErrorComponent: ({ error }) => ErrorComponent({ error }),
   defaultPreload: 'intent',
   scrollRestoration: true,
   // defaultNotFoundComponent: NotFound,
