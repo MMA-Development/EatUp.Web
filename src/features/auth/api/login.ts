@@ -1,6 +1,8 @@
 import { eatupApi } from '@lib/api-slice.ts'
 import { LoginPayload, LoginResponse, LoginResponseSchema } from '../types'
 import { setToken, setUser } from '../store'
+import { decodeJwtPayload } from '@utils/jwt.ts'
+import { vendor } from '@features/auth/api/get-vendor.ts'
 
 export const authenticate = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +18,10 @@ export const authenticate = eatupApi.injectEndpoints({
       onQueryStarted: async (credentials, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled
+
+          const vendorId = decodeJwtPayload(data.accessToken).nameid
+          dispatch(vendor.endpoints.getVendor.initiate(vendorId))
+
           dispatch(setUser(credentials.username))
           dispatch(setToken(data))
         } catch {

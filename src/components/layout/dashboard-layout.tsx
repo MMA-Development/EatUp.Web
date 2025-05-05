@@ -19,10 +19,14 @@ import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuSalad } from 'react-icons/lu'
 import { UserMenu } from '@features/auth/components/user-menu.tsx'
+import { useAppSelector } from '@store/hooks.ts'
+import { selectVendor } from '@features/auth/store'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
   const location = useRouterState({ select: (s) => s.location })
+
+  const vendor = useAppSelector(selectVendor)
 
   const { t } = useTranslation('common')
 
@@ -30,6 +34,8 @@ export function DashboardLayout() {
 
   const dashboardRoute = routesByPath['/dashboard']
   const dashboardRoutes = Object.values(dashboardRoute.children ?? {})
+
+  if (!vendor) return null
 
   return (
     <Flex h="100vh" w="100vw">
@@ -50,10 +56,10 @@ export function DashboardLayout() {
             </IconButton>
             <Stack gap={0}>
               <Text textStyle={'sm'} color={'fg'} fontWeight={'semibold'}>
-                Super Brugsen
+                {vendor.name}
               </Text>
               <Text textStyle={'xs'} color={'fg.muted'}>
-                Supermarked
+                {vendor.cvr}
               </Text>
             </Stack>
           </HStack>
