@@ -1,6 +1,7 @@
 import { Breadcrumb } from '@chakra-ui/react'
 import { isMatch, Link, useMatches } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { Fragment } from 'react'
 
 export function Breadcrumbs() {
   const { t } = useTranslation()
@@ -20,7 +21,7 @@ export function Breadcrumbs() {
           const path = match.fullPath
 
           return (
-            <>
+            <Fragment key={match.id}>
               <Breadcrumb.Item>
                 {isLast ? (
                   <Breadcrumb.CurrentLink>{label}</Breadcrumb.CurrentLink>
@@ -31,7 +32,7 @@ export function Breadcrumbs() {
                 )}
               </Breadcrumb.Item>
               {!isLast && <Breadcrumb.Separator />}
-            </>
+            </Fragment>
           )
         })}
       </Breadcrumb.List>

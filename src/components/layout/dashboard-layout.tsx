@@ -80,13 +80,7 @@ export function DashboardLayout() {
           <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
             <Accordion.Item value={'meal'}>
               <Accordion.ItemTrigger asChild w={'100%'}>
-                <Button
-                  w={'100%'}
-                  size={'sm'}
-                  rounded={'lg'}
-                  variant={'ghost'}
-                  justifyContent={'flex-start'}
-                >
+                <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
                   <Icon fontSize="lg" color="fg.subtle">
                     <LuSalad />
                   </Icon>
@@ -96,13 +90,12 @@ export function DashboardLayout() {
               </Accordion.ItemTrigger>
               <Accordion.ItemContent pt={2}>
                 {dashboardRoutes.map((route) => (
-                  <Stack flexDirection={'row'} ml={6}>
+                  <Stack key={route.id} flexDirection={'row'} ml={6}>
                     <Separator orientation="vertical" h={10} />
                     <Accordion.ItemBody p={0} w={'100%'}>
                       <Button
                         w={'100%'}
                         size={'sm'}
-                        rounded={'lg'}
                         variant={route.fullPath === location.pathname ? 'subtle' : 'ghost'}
                         justifyContent={'flex-start'}
                         onClick={() => navigate({ to: route.fullPath })}
@@ -139,7 +132,7 @@ export function DashboardLayout() {
             <Separator orientation="vertical" h={6} />
             <Breadcrumbs />
             <LanguageSelector size={'sm'} ml={'auto'} w={'200px'} rounded={'lg'} />
-            <ColorModeButton variant={'outline'} rounded={'lg'} />
+            <ColorModeButton variant={'outline'} />
           </HStack>
         </Box>
 
