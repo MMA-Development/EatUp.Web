@@ -5,7 +5,14 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [TanStackRouterVite({ target: 'react', autoCodeSplitting: true }), react()],
+  plugins: [
+    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler']]
+      }
+    })
+  ],
   resolve: {
     alias: {
       '@app': resolve(__dirname, 'src/app'),
