@@ -14,11 +14,11 @@ import {
 import { Breadcrumbs } from '@components/ui/breadcrumbs.tsx'
 import { ColorModeButton } from '@components/ui/color-mode.tsx'
 import { LanguageSelector } from '@components/ui/language-selector.tsx'
-import { LogoutButton } from '@features/auth/components/logout-button.tsx'
 import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuSalad } from 'react-icons/lu'
+import { UserMenu } from '@features/auth/components/user-menu.tsx'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -117,7 +117,7 @@ export function DashboardLayout() {
           </Accordion.Root>
         </Stack>
         <Stack position={'absolute'} bottom={12} mt={'auto'}>
-          <LogoutButton mt={'auto'} colorPalette={'red'} variant={'outline'} />
+          <UserMenu />
         </Stack>
       </Box>
 
@@ -133,7 +133,7 @@ export function DashboardLayout() {
           alignContent={'center'}
         >
           <HStack>
-            <IconButton variant={'ghost'} size={'xs'}>
+            <IconButton rounded={'lg'} variant={'ghost'} size={'xs'}>
               <FiSidebar />
             </IconButton>
             <Separator orientation="vertical" h={6} />
