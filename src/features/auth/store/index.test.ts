@@ -8,6 +8,7 @@ import authReducer, {
   setToken,
   setUser
 } from './index.ts'
+import { LoginResponse } from '@features/auth/types'
 
 describe('auth reducer', () => {
   let store: typeof reduxStore
@@ -21,10 +22,15 @@ describe('auth reducer', () => {
   })
 
   it('should handle setToken', () => {
-    store.dispatch(setToken('my-token'))
+    const token = {
+      accessToken: 'accessToken',
+      refreshToken: 'refreshToken'
+    } satisfies LoginResponse
+
+    store.dispatch(setToken(token))
 
     const state = store.getState()
-    expect(selectToken(state)).toBe('my-token')
+    expect(selectToken(state)).toBe(token)
     expect(selectIsAuthenticated(state)).toBe(true)
   })
 

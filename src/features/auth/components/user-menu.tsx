@@ -29,11 +29,11 @@ export function UserMenu() {
       <Portal>
         <Menu.Positioner>
           <Menu.Content rounded={'lg'}>
-            <Menu.Item cursor={'pointer'} rounded={'lg'} value="rename">
-              Rename
+            <Menu.Item cursor={'pointer'} rounded={'lg'} value="profile">
+              Profile
             </Menu.Item>
-            <Menu.Item cursor={'pointer'} rounded={'lg'} value="export">
-              Export
+            <Menu.Item cursor={'pointer'} rounded={'lg'} value="settings">
+              Settings
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item
