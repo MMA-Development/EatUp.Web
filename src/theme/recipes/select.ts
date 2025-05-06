@@ -7,10 +7,12 @@ export const selectSlotRecipe = defineSlotRecipe({
       borderRadius: '!important lg'
     },
     item: {
-      borderRadius: '!important lg'
+      borderRadius: '!important lg',
+      cursor: 'pointer'
     },
     trigger: {
-      borderRadius: '!important lg'
+      borderRadius: '!important lg',
+      cursor: 'pointer'
     }
   }
 })
