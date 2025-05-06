@@ -21,6 +21,7 @@ import { LuFactory, LuSalad } from 'react-icons/lu'
 import { UserMenu } from '@features/auth/components/user-menu.tsx'
 import { useAppSelector } from '@store/hooks.ts'
 import { selectVendor } from '@features/auth/store'
+import { LocalStorage, useLocalStorage } from '@hooks/use-local-storage.ts'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -32,6 +33,11 @@ export function DashboardLayout() {
 
   const { routesByPath } = useRouter()
 
+  const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorage(
+    LocalStorage.SIDEBAR_COLLAPSED,
+    false
+  )
+
   const dashboardRoute = routesByPath['/dashboard']
   const dashboardRoutes = Object.values(dashboardRoute.children ?? {})
 
@@ -41,7 +47,7 @@ export function DashboardLayout() {
     <Flex h="100vh" w="100vw">
       <Box
         gap={2}
-        px={4}
+        px={{ base: 2, md: 4 }}
         as="aside"
         w="240px"
         h="100%"
@@ -49,12 +55,12 @@ export function DashboardLayout() {
         borderRight="1px solid"
         borderRightColor="border"
       >
-        <Flex my={4}>
+        <Flex my={4} justifyContent={{ base: 'center', md: 'flex-start' }}>
           <HStack>
-            <IconButton size={'xs'} rounded={'lg'} pointerEvents={'none'}>
+            <IconButton size={'xs'} pointerEvents={'none'}>
               <LuFactory />
             </IconButton>
-            <Stack gap={0}>
+            <Stack gap={0} display={{ base: 'none', md: 'flex' }}>
               <Text textStyle={'sm'} color={'fg'} fontWeight={'semibold'}>
                 {vendor.name}
               </Text>
@@ -65,12 +71,12 @@ export function DashboardLayout() {
           </HStack>
         </Flex>
         <Stack mt={8}>
-          <Text textStyle={'xs'} color={'fg.muted'}>
+          <Text textStyle={'xs'} color={'fg.muted'} display={{ base: 'none', md: 'flex' }}>
             Dashboard
           </Text>
           <Button
+            display={{ base: 'none', md: 'flex' }}
             size={'sm'}
-            rounded={'lg'}
             variant={'ghost'}
             justifyContent={'flex-start'}
             onClick={() => navigate({ to: '/dashboard' })}
@@ -80,7 +86,7 @@ export function DashboardLayout() {
         </Stack>
 
         <Stack my={2}>
-          <Text textStyle={'xs'} color={'fg.muted'}>
+          <Text textStyle={'xs'} color={'fg.muted'} display={{ base: 'none', md: 'flex' }}>
             Måltids håndtering
           </Text>
           <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
@@ -90,8 +96,10 @@ export function DashboardLayout() {
                   <Icon fontSize="lg" color="fg.subtle">
                     <LuSalad />
                   </Icon>
-                  <Span textStyle={'sm'}>Måltider</Span>
-                  <Accordion.ItemIndicator ml={'auto'} />
+                  <Span display={{ base: 'none', md: 'flex' }} textStyle={'sm'}>
+                    Måltider
+                  </Span>
+                  <Accordion.ItemIndicator display={{ base: 'none', md: 'flex' }} ml={'auto'} />
                 </Button>
               </Accordion.ItemTrigger>
               <Accordion.ItemContent pt={2}>
@@ -132,12 +140,16 @@ export function DashboardLayout() {
           alignContent={'center'}
         >
           <HStack>
-            <IconButton rounded={'lg'} variant={'ghost'} size={'xs'}>
+            <IconButton
+              variant={'ghost'}
+              size={'xs'}
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            >
               <FiSidebar />
             </IconButton>
             <Separator orientation="vertical" h={6} />
             <Breadcrumbs />
-            <LanguageSelector size={'sm'} ml={'auto'} w={'200px'} rounded={'lg'} />
+            <LanguageSelector size={'sm'} ml={'auto'} w={'200px'} />
             <ColorModeButton variant={'outline'} />
           </HStack>
         </Box>
