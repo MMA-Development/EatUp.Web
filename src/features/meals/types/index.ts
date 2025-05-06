@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const MealSchema = z.object({
+  id: z.string(),
   vendorId: z.string(),
   vendorName: z.string(),
   title: z.string(),

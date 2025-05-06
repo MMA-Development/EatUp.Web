@@ -16,6 +16,7 @@ import {
 import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useDeleteMealMutation } from '../api/delete-meal'
 
 const limitList = createListCollection({
   items: [
@@ -27,6 +28,8 @@ const limitList = createListCollection({
 
 export function MealList() {
   const navigate = useNavigate()
+
+  const [remove] = useDeleteMealMutation()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
   const { limit } = useSearch({ from: '/dashboard/meals' })
@@ -83,6 +86,7 @@ export function MealList() {
                           value="delete"
                           color="fg.error"
                           _hover={{ bg: 'bg.error', color: 'fg.error' }}
+                          onClick={() => remove(meal.id)}
                         >
                           <Box flex="1">Delete</Box>
                         </Menu.Item>

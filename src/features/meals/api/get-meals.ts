@@ -1,11 +1,10 @@
+import { eatupApi } from '@lib/api-slice.ts'
+import { Meal, MealSchema } from '@features/meals/types'
 import {
   ApiPaginationWithSearch,
   PaginatedResponse,
   PaginatedResponseSchema
 } from '../../../types/api-types.ts'
-
-import { eatupApi } from '@lib/api-slice.ts'
-import { Meal, MealSchema } from '@features/meals/types'
 
 export const meals = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
