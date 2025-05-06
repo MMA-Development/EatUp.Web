@@ -36,7 +36,6 @@ export function MealScreen() {
         >
           <Input
             ref={inputRef}
-            rounded={'lg'}
             onChange={(e) => setSearchValue(e.target.value)}
             defaultValue={query}
             size={'sm'}
@@ -51,7 +50,6 @@ export function MealScreen() {
             h={'36px'}
             loading={isFetching}
             onClick={refetch}
-            rounded={'lg'}
             variant={'outline'}
             size={'sm'}
             aria-label={'refresh'}

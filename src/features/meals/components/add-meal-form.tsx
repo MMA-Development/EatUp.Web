@@ -176,16 +176,10 @@ export function AddMealForm() {
           </Fieldset.Content>
 
           <HStack>
-            <Button
-              size={'sm'}
-              rounded={'lg'}
-              type="submit"
-              alignSelf="flex-start"
-              loading={isLoading}
-            >
+            <Button size={'sm'} type="submit" alignSelf="flex-start" loading={isLoading}>
               Submit
             </Button>
-            <Button size={'sm'} rounded={'lg'} variant={'outline'}>
+            <Button size={'sm'} variant={'outline'}>
               Opret skabelon
             </Button>
           </HStack>

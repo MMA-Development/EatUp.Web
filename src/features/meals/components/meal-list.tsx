@@ -8,7 +8,8 @@ import {
   Pagination,
   Portal,
   Select,
-  Table
+  Table,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
@@ -26,6 +27,8 @@ export function MealList() {
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
   const { limit } = useSearch({ from: '/dashboard/meals' })
+
+  const mobile = useBreakpointValue({ base: true, md: false })
 
   return (
     <Flex direction={'column'}>
@@ -82,21 +85,25 @@ export function MealList() {
         <HStack>
           <ButtonGroup variant="ghost" size="sm" w={'100%'}>
             <Pagination.PrevTrigger asChild>
-              <IconButton rounded={'lg'}>
+              <IconButton>
                 <LuChevronLeft />
               </IconButton>
             </Pagination.PrevTrigger>
 
-            <Pagination.Items
-              render={(page) => (
-                <IconButton rounded={'lg'} variant={{ base: 'ghost', _selected: 'outline' }}>
-                  {page.value}
-                </IconButton>
-              )}
-            />
+            {!mobile ? (
+              <Pagination.Items
+                render={(page) => (
+                  <IconButton variant={{ base: 'ghost', _selected: 'outline' }}>
+                    {page.value}
+                  </IconButton>
+                )}
+              />
+            ) : (
+              <Pagination.PageText />
+            )}
 
             <Pagination.NextTrigger asChild>
-              <IconButton rounded={'lg'}>
+              <IconButton>
                 <LuChevronRight />
               </IconButton>
             </Pagination.NextTrigger>

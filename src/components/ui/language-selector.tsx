@@ -36,7 +36,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
     >
       <Select.HiddenSelect />
       <Select.Control>
-        <Select.Trigger rounded={'lg'}>
+        <Select.Trigger>
           <Select.ValueText>
             <HStack>
               <Flex
@@ -66,9 +66,9 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
       </Select.Control>
       <Portal>
         <Select.Positioner>
-          <Select.Content rounded={'lg'}>
+          <Select.Content >
             {languages.items.map((lang) => (
-              <Select.Item rounded={'lg'} item={lang} key={lang.value} justifyContent="flex-start">
+              <Select.Item item={lang} key={lang.value} justifyContent="flex-start">
                 <Flex
                   w="30px"
                   h="30px"

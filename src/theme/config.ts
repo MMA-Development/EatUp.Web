@@ -1,7 +1,9 @@
 import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
-import { buttonRecipe } from './button.ts'
-import { inputRecipe } from './input.ts'
-import { textareaRecipe } from './textarea.ts'
+import { buttonRecipe } from './recipes/button.ts'
+import { inputRecipe } from './recipes/input.ts'
+import { textareaRecipe } from './recipes/textarea.ts'
+import { menuSlotRecipe } from '@theme/recipes/menu.ts'
+import { selectSlotRecipe } from '@theme/recipes/select.ts'
 
 const customConfig = defineConfig({
   theme: {
@@ -9,6 +11,10 @@ const customConfig = defineConfig({
       button: buttonRecipe,
       input: inputRecipe,
       textarea: textareaRecipe
+    },
+    slotRecipes: {
+      menu: menuSlotRecipe,
+      select: selectSlotRecipe
     }
   }
 })
