@@ -1,10 +1,12 @@
 import {
   Badge,
+  Box,
   ButtonGroup,
   createListCollection,
   Flex,
   HStack,
   IconButton,
+  Menu,
   Pagination,
   Portal,
   Select,
@@ -13,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const limitList = createListCollection({
   items: [
@@ -42,6 +45,7 @@ export function MealList() {
             <Table.ColumnHeader>Quantity</Table.ColumnHeader>
             <Table.ColumnHeader>Max quantity</Table.ColumnHeader>
             <Table.ColumnHeader>Categories</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="end">Handlinger</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -62,6 +66,30 @@ export function MealList() {
                     Dinner
                   </Badge>
                 </HStack>
+              </Table.Cell>
+              <Table.Cell textAlign="end">
+                <Menu.Root positioning={{ placement: 'left-start' }}>
+                  <Menu.Trigger asChild>
+                    <IconButton size={'2xs'} variant={'ghost'} aria-label={'more options'}>
+                      <BsThreeDotsVertical />
+                    </IconButton>
+                  </Menu.Trigger>
+                  <Portal>
+                    <Menu.Positioner>
+                      <Menu.Content>
+                        <Menu.Item value="edit">Edit</Menu.Item>
+                        <Menu.Separator />
+                        <Menu.Item
+                          value="delete"
+                          color="fg.error"
+                          _hover={{ bg: 'bg.error', color: 'fg.error' }}
+                        >
+                          <Box flex="1">Delete</Box>
+                        </Menu.Item>
+                      </Menu.Content>
+                    </Menu.Positioner>
+                  </Portal>
+                </Menu.Root>
               </Table.Cell>
             </Table.Row>
           ))}
