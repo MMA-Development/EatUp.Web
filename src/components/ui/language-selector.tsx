@@ -4,12 +4,16 @@ import {
   HStack,
   Portal,
   Select,
-  SelectRootProps
+  SelectRootProps,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection'>) {
   const { i18n } = useTranslation()
+
+  const mobile = useBreakpointValue({ base: true, md: false })
 
   const languages = createListCollection({
     items: [
@@ -18,6 +22,9 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
       { label: 'English', value: 'en', countryCode: 'us' }
     ]
   })
+
+  // React compiler rerenders on this component when the lang is changed. This is a hack to fix that.
+  useEffect(() => {}, [i18n])
 
   const currentLang =
     languages.items.find((lang) => lang.value === i18n.language) || languages.items[0]
@@ -56,7 +63,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
                   }}
                 />
               </Flex>
-              {currentLang.label}
+              {!mobile && currentLang.label}
             </HStack>
           </Select.ValueText>
         </Select.Trigger>
@@ -66,7 +73,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
       </Select.Control>
       <Portal>
         <Select.Positioner>
-          <Select.Content >
+          <Select.Content>
             {languages.items.map((lang) => (
               <Select.Item item={lang} key={lang.value} justifyContent="flex-start">
                 <Flex
@@ -86,7 +93,7 @@ export function LanguageSelector({ ...props }: Omit<SelectRootProps, 'collection
                     }}
                   />
                 </Flex>
-                {lang.label}
+                {!mobile && lang.label}
                 <Select.ItemIndicator ml={'auto'} />
               </Select.Item>
             ))}

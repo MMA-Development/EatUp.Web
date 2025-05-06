@@ -9,7 +9,8 @@ import {
   Separator,
   Span,
   Stack,
-  Text
+  Text,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { Breadcrumbs } from '@components/ui/breadcrumbs.tsx'
 import { ColorModeButton } from '@components/ui/color-mode.tsx'
@@ -17,17 +18,21 @@ import { LanguageSelector } from '@components/ui/language-selector.tsx'
 import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
-import { LuFactory, LuSalad } from 'react-icons/lu'
+import { LuFactory, LuLayoutDashboard, LuSalad } from 'react-icons/lu'
 import { UserMenu } from '@features/auth/components/user-menu.tsx'
 import { useAppSelector } from '@store/hooks.ts'
 import { selectVendor } from '@features/auth/store'
 import { LocalStorage, useLocalStorage } from '@hooks/use-local-storage.ts'
+import { Tooltip } from '@components/ui/tooltip.tsx'
+import { useEffect } from 'react'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
   const location = useRouterState({ select: (s) => s.location })
 
   const vendor = useAppSelector(selectVendor)
+
+  const mobile = useBreakpointValue({ base: true, md: false })
 
   const { t } = useTranslation('common')
 
@@ -38,6 +43,12 @@ export function DashboardLayout() {
     false
   )
 
+  useEffect(() => {
+    if (mobile) {
+      setSidebarCollapsed(true)
+    } 
+  }, [mobile, setSidebarCollapsed])
+
   const dashboardRoute = routesByPath['/dashboard']
   const dashboardRoutes = Object.values(dashboardRoute.children ?? {})
 
@@ -47,20 +58,19 @@ export function DashboardLayout() {
     <Flex h="100vh" w="100vw">
       <Box
         gap={2}
-        px={{ base: 2, md: 4 }}
+        px={sidebarCollapsed ? 2 : 4}
         as="aside"
-        w="240px"
         h="100%"
         bg="bg.subtle"
         borderRight="1px solid"
         borderRightColor="border"
       >
-        <Flex my={4} justifyContent={{ base: 'center', md: 'flex-start' }}>
+        <Flex my={4} justifyContent={sidebarCollapsed ? 'center' : 'flex-start'}>
           <HStack>
             <IconButton size={'xs'} pointerEvents={'none'}>
               <LuFactory />
             </IconButton>
-            <Stack gap={0} display={{ base: 'none', md: 'flex' }}>
+            <Stack gap={0} display={sidebarCollapsed ? 'none' : 'flex'}>
               <Text textStyle={'sm'} color={'fg'} fontWeight={'semibold'}>
                 {vendor.name}
               </Text>
@@ -71,37 +81,56 @@ export function DashboardLayout() {
           </HStack>
         </Flex>
         <Stack mt={8}>
-          <Text textStyle={'xs'} color={'fg.muted'} display={{ base: 'none', md: 'flex' }}>
+          <Text textStyle={'xs'} color={'fg.muted'} display={sidebarCollapsed ? 'none' : 'flex'}>
             Dashboard
           </Text>
-          <Button
-            display={{ base: 'none', md: 'flex' }}
-            size={'sm'}
-            variant={'ghost'}
-            justifyContent={'flex-start'}
-            onClick={() => navigate({ to: '/dashboard' })}
+          <Tooltip
+            positioning={{ placement: 'right' }}
+            openDelay={sidebarCollapsed ? 50 : 500}
+            content={'Dashboard'}
           >
-            Dashboard
-          </Button>
+            <Button
+              size={'sm'}
+              variant={'ghost'}
+              justifyContent={'flex-start'}
+              onClick={() => navigate({ to: '/dashboard' })}
+            >
+              <Icon fontSize="lg" color="fg.subtle">
+                <LuLayoutDashboard />
+              </Icon>
+              <Span display={sidebarCollapsed ? 'none' : 'flex'} textStyle={'sm'}>
+                Dashboard
+              </Span>
+            </Button>
+          </Tooltip>
         </Stack>
 
         <Stack my={2}>
-          <Text textStyle={'xs'} color={'fg.muted'} display={{ base: 'none', md: 'flex' }}>
+          <Text textStyle={'xs'} color={'fg.muted'} display={sidebarCollapsed ? 'none' : 'flex'}>
             Måltids håndtering
           </Text>
           <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
             <Accordion.Item value={'meal'}>
-              <Accordion.ItemTrigger asChild w={'100%'}>
-                <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
-                  <Icon fontSize="lg" color="fg.subtle">
-                    <LuSalad />
-                  </Icon>
-                  <Span display={{ base: 'none', md: 'flex' }} textStyle={'sm'}>
-                    Måltider
-                  </Span>
-                  <Accordion.ItemIndicator display={{ base: 'none', md: 'flex' }} ml={'auto'} />
-                </Button>
-              </Accordion.ItemTrigger>
+              <Tooltip
+                positioning={{ placement: 'right' }}
+                openDelay={sidebarCollapsed ? 50 : 500}
+                content={'Måltider'}
+              >
+                <Accordion.ItemTrigger asChild w={'100%'}>
+                  <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
+                    <Icon fontSize="lg" color="fg.subtle">
+                      <LuSalad />
+                    </Icon>
+                    <Span display={sidebarCollapsed ? 'none' : 'flex'} textStyle={'sm'}>
+                      Måltider
+                    </Span>
+                    <Accordion.ItemIndicator
+                      display={sidebarCollapsed ? 'none' : 'flex'}
+                      ml={'auto'}
+                    />
+                  </Button>
+                </Accordion.ItemTrigger>
+              </Tooltip>
               <Accordion.ItemContent pt={2}>
                 {dashboardRoutes.map((route) => (
                   <Stack key={route.id} flexDirection={'row'} ml={6}>
@@ -149,7 +178,7 @@ export function DashboardLayout() {
             </IconButton>
             <Separator orientation="vertical" h={6} />
             <Breadcrumbs />
-            <LanguageSelector size={'sm'} ml={'auto'} w={'200px'} />
+            <LanguageSelector size={'sm'} ml={'auto'} w={{ base: '75px', md: '200px' }} />
             <ColorModeButton variant={'outline'} />
           </HStack>
         </Box>
