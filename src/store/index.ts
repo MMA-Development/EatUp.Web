@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 import { encryptTransform } from 'redux-persist-transform-encrypt'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants'
 import storage from 'redux-persist/lib/storage'
+import { authRoutingMiddleware } from '@features/auth/middleware/auth-routing-middleware.ts'
 
 const persistConfig = {
   key: 'root',
@@ -29,7 +30,9 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat(eatupApi.middleware)
+    })
+      .concat(eatupApi.middleware)
+      .concat(authRoutingMiddleware.middleware)
 })
 
 export const persistor = persistStore(store)
