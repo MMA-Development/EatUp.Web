@@ -52,7 +52,7 @@ export function DashboardLayout() {
   const dashboardRoute = routesByPath['/dashboard']
   const dashboardRoutes = Object.values(
     dashboardRoute.children
-      ? dashboardRoute.children.filter((r) => r.options.staticData.displayOnNav === true)
+      ? dashboardRoute.children.filter((r) => r.options.staticData?.displayOnNav === true)
       : {}
   )
 
