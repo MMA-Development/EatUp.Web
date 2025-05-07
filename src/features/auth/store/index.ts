@@ -29,9 +29,6 @@ const authSlice = createSlice({
       state.token = action.payload
       state.isAuthenticated = action.payload !== null
     },
-    setAccessToken(state, action: PayloadAction<string>) {
-      ;(state.token as Token).accessToken = action.payload
-    },
     setUser(state, action: PayloadAction<string | null>) {
       state.user = action.payload
     },
@@ -41,12 +38,13 @@ const authSlice = createSlice({
     logout(state) {
       state.token = null
       state.user = null
+      state.vendor = null
       state.isAuthenticated = false
     }
   }
 })
 
-export const { setToken, setAccessToken, setUser, logout, setVendor } = authSlice.actions
+export const { setToken, setUser, logout, setVendor } = authSlice.actions
 
 export const selectToken = (state: RootState) => state.auth.token
 export const selectUser = (state: RootState) => state.auth.user

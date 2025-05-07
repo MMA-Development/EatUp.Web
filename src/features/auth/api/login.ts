@@ -20,7 +20,11 @@ export const authenticate = eatupApi.injectEndpoints({
           const { data } = await queryFulfilled
 
           const vendorId = decodeJwtPayload(data.accessToken).nameid
-          dispatch(vendor.endpoints.getVendor.initiate(vendorId))
+          dispatch(
+            vendor.endpoints.getVendor.initiate(vendorId, {
+              forceRefetch: true
+            })
+          )
 
           dispatch(setUser(credentials.username))
           dispatch(setToken(data))

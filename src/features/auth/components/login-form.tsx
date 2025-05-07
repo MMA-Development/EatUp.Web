@@ -5,14 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginPayload, LoginPayloadSchema } from '../types'
 import { PasswordInput } from '@components/ui/password-input.tsx'
 import { useAuthenticateMutation } from '../api/login.ts'
-import { useNavigate, useSearch } from '@tanstack/react-router'
 import { CustomLink } from '@components/ui/custom-link.tsx'
 
 export function LoginForm() {
   const { t } = useTranslation('auth')
-
-  const search = useSearch({ from: '/auth/login' })
-  const navigate = useNavigate()
 
   const [login, { isLoading, isError }] = useAuthenticateMutation()
 
@@ -66,7 +62,7 @@ export function LoginForm() {
           </Button>
           <Separator orientation="vertical" h={8} />
           <Text>
-            Ikke oprettet endnu? Opret dig {' '}
+            Ikke oprettet endnu? Opret dig{' '}
             <CustomLink colorPalette={'blue'} to={'/auth/signup'}>
               her.
             </CustomLink>

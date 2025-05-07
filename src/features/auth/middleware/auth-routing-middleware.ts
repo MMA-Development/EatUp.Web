@@ -4,7 +4,6 @@ import { router } from '@app/router.ts'
 import { RootState } from '@store/types.ts'
 import { selectVendor } from '@features/auth/store'
 
-// Create the middleware instance and methods
 export const authRoutingMiddleware = createListenerMiddleware()
 
 authRoutingMiddleware.startListening({
@@ -12,15 +11,10 @@ authRoutingMiddleware.startListening({
   effect: async (_action, listenerApi) => {
     listenerApi.cancelActiveListeners()
 
-    const { redirect } = router.state.location.search
+    await listenerApi.condition((_, state) => selectVendor(state as RootState) !== null)
 
-    const conditionMet = await listenerApi.condition(
-      (_, currentState) => selectVendor(currentState as RootState) !== null,
-      1000
-    )
-
-    if (conditionMet) {
-      router.navigate({ to: redirect ? redirect : '/dashboard' })
-    }
+    // now vendor is guaranteed set
+    const { redirect = '/dashboard' } = router.state.location.search
+    router.navigate({ to: redirect })
   }
 })
