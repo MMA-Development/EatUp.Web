@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function useDebouncedState<T = any>(
-  defaultValue: T,
-  wait: number,
-  options = { leading: false }
-) {
+export function useDebouncedState<T>(defaultValue: T, wait: number, options = { leading: false }) {
   const [value, setValue] = useState(defaultValue)
   const timeoutRef = useRef<number | null>(null)
   const leadingRef = useRef(true)

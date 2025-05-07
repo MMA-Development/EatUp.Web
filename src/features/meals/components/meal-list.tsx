@@ -156,7 +156,7 @@ export function MealList() {
           <Select.Root
             defaultValue={[String(limit)]}
             onValueChange={(e) => {
-              navigate({
+              void navigate({
                 to: '/dashboard/meals',
                 search: (old) => ({ ...old, limit: Number(e.value[0]) }),
                 replace: true
