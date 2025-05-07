@@ -21,13 +21,19 @@ export const MealPayloadSchema = z
   .object({
     vendorName: z.string().default('Super Brugsen'),
     title: z.string(),
-    originalPrice: z.number(),
-    price: z.number(),
+    originalPrice: z.number().min(1),
+    price: z.number().min(1),
     description: z.string(),
-    quantity: z.number(),
-    maxOrderQuantity: z.number(),
-    firstAvailablePickup: z.date(),
-    lastAvailablePickup: z.date()
+    quantity: z.number().min(1),
+    maxOrderQuantity: z.number().min(1),
+    firstAvailablePickup: z
+      .string()
+      .refine((val) => !isNaN(Date.parse(val)), { message: 'Ugyldig dato/tid' })
+      .transform((val) => new Date(val).toISOString()),
+    lastAvailablePickup: z
+      .string()
+      .refine((val) => !isNaN(Date.parse(val)), { message: 'Ugyldig dato/tid' })
+      .transform((val) => new Date(val).toISOString())
   })
   .superRefine((data, ctx) => {
     if (data.price > data.originalPrice) {
@@ -46,23 +52,23 @@ export const MealPayloadSchema = z
       })
     }
 
+    const now = new Date()
     const first = new Date(data.firstAvailablePickup)
     const last = new Date(data.lastAvailablePickup)
-    const now = new Date()
-
-    if (first > last) {
-      ctx.addIssue({
-        path: ['firstAvailablePickup'],
-        code: z.ZodIssueCode.custom,
-        message: 'First pickup must be before last pickup'
-      })
-    }
 
     if (first < now) {
       ctx.addIssue({
         path: ['firstAvailablePickup'],
         code: z.ZodIssueCode.custom,
         message: 'First pickup must be in the future'
+      })
+    }
+
+    if (!isNaN(first.getTime()) && !isNaN(last.getTime()) && first >= last) {
+      ctx.addIssue({
+        path: ['firstAvailablePickup'],
+        code: z.ZodIssueCode.custom,
+        message: 'First available must be before last available'
       })
     }
   })

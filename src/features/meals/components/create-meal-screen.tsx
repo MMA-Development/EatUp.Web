@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react'
-import { AddMealForm } from '@features/meals/components/add-meal-form.tsx'
+import { MealForm } from '@features/meals/components/meal-form.tsx'
 
 export function CreateMealScreen() {
   return (
     <Flex>
-      <AddMealForm />
+      <MealForm />
     </Flex>
   )
 }

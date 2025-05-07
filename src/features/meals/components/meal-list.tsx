@@ -80,7 +80,19 @@ export function MealList() {
                   <Portal>
                     <Menu.Positioner>
                       <Menu.Content>
-                        <Menu.Item value="edit">Edit</Menu.Item>
+                        <Menu.Item
+                          value="edit"
+                          onClick={() =>
+                            navigate({
+                              to: '/dashboard/meals/$id',
+                              params: {
+                                id: meal.id
+                              }
+                            })
+                          }
+                        >
+                          Edit
+                        </Menu.Item>
                         <Menu.Separator />
                         <Menu.Item
                           value="delete"
