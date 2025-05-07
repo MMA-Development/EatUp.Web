@@ -46,11 +46,15 @@ export function DashboardLayout() {
   useEffect(() => {
     if (mobile) {
       setSidebarCollapsed(true)
-    } 
+    }
   }, [mobile, setSidebarCollapsed])
 
   const dashboardRoute = routesByPath['/dashboard']
-  const dashboardRoutes = Object.values(dashboardRoute.children ?? {})
+  const dashboardRoutes = Object.values(
+    dashboardRoute.children
+      ? dashboardRoute.children.filter((r) => r.options.staticData.displayOnNav === true)
+      : {}
+  )
 
   if (!vendor) return null
 

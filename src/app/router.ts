@@ -6,19 +6,21 @@ import { mealsRoute } from '@app/routes/dashboard/meals/meals-route.ts'
 import { Auth } from '@features/auth/store'
 import { createRootRouteWithContext, createRouter, ErrorComponent } from '@tanstack/react-router'
 import { Root } from './routes/root.tsx'
+import { editMealRoute } from '@app/routes/dashboard/meals/edit-meal-route.ts'
+import { signupRoute } from '@app/routes/auth/signup-route.ts'
 
 export interface RouterContext {
   auth: Auth
 }
 
-// This should not render any layout. Just acts as a placeholder
+// This should not render any layout. Act as a placeholder
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: Root
 })
 
 export const routeTree = rootRoute.addChildren([
-  authRoute.addChildren([loginRoute]),
-  dashboardRoute.addChildren([mealsRoute, createMealRoute])
+  authRoute.addChildren([loginRoute, signupRoute]),
+  dashboardRoute.addChildren([mealsRoute, createMealRoute, editMealRoute])
 ])
 
 export const router = createRouter({
@@ -41,5 +43,6 @@ declare module '@tanstack/react-router' {
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
     name?: string
+    displayOnNav?: boolean
   }
 }

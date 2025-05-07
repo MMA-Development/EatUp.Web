@@ -24,6 +24,7 @@ export const mealsRoute = createRoute({
   path: '/meals',
   component: MealScreen,
   staticData: {
+    displayOnNav: true,
     name: 'overview'
   },
   pendingMinMs: 500,

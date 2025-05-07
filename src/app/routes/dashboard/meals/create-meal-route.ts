@@ -4,10 +4,11 @@ import { createRoute } from '@tanstack/react-router'
 
 export const createMealRoute = createRoute({
   getParentRoute: () => dashboardRoute,
-  path: '/create',
+  path: '/meals/create',
   component: CreateMealScreen,
   staticData: {
-    name: 'create.meal'
+    name: 'create.meal',
+    displayOnNav: true
   },
   loader: () => {
     return {
