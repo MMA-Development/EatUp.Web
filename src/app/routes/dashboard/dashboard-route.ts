@@ -6,9 +6,14 @@ export const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/dashboard',
   component: DashboardLayout,
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
     if (!context.auth.isAuthenticated) {
-      throw redirect({ to: '/auth/login' })
+      throw redirect({
+        to: '/auth/login',
+        search: {
+          redirect: location.href
+        }
+      })
     }
   },
   // Used to provide breadcrumb navigation data
