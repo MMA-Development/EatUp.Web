@@ -12,6 +12,18 @@ export const LoginResponseSchema = z.object({
   refreshToken: z.string()
 })
 
+export const SignupPayloadSchema = z.object({
+  name: z.string().min(3),
+  password: z.string().min(4),
+  username: z.string().min(4),
+  cvr: z.string(),
+  email: z.string().email(),
+  longitude: z.number(),
+  latitude: z.number()
+})
+
+export type SignupPayload = z.infer<typeof SignupPayloadSchema>
+
 export type LoginResponse = z.infer<typeof LoginResponseSchema>
 
 export const VendorResponseSchema = z.object({
