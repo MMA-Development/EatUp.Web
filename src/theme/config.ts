@@ -4,13 +4,15 @@ import { inputRecipe } from './recipes/input.ts'
 import { textareaRecipe } from './recipes/textarea.ts'
 import { menuSlotRecipe } from '@theme/recipes/menu.ts'
 import { selectSlotRecipe } from '@theme/recipes/select.ts'
+import { badgeRecipe } from '@theme/recipes/badge.ts'
 
 const customConfig = defineConfig({
   theme: {
     recipes: {
       button: buttonRecipe,
       input: inputRecipe,
-      textarea: textareaRecipe
+      textarea: textareaRecipe,
+      badge: badgeRecipe
     },
     slotRecipes: {
       menu: menuSlotRecipe,
