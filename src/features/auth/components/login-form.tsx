@@ -1,16 +1,20 @@
 import { Button, Field, Fieldset, HStack, Input, Separator, Stack, Text } from '@chakra-ui/react'
-import { useTranslation } from 'react-i18next'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginPayload, LoginPayloadSchema } from '../types'
-import { PasswordInput } from '@components/ui/password-input.tsx'
-import { useAuthenticateMutation } from '../api/login.ts'
 import { CustomLink } from '@components/ui/custom-link.tsx'
+import { PasswordInput } from '@components/ui/password-input.tsx'
+import { useGetVendorMeQueryState } from '@features/auth/api/get-vendor.ts'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { useAuthenticateMutation } from '../api/login.ts'
+import { LoginPayload, LoginPayloadSchema } from '../types'
 
 export function LoginForm() {
   const { t } = useTranslation('auth')
 
-  const [login, { isLoading, isError }] = useAuthenticateMutation()
+  const [login, { isLoading: isLoadingLogin, isError }] = useAuthenticateMutation()
+  const { isFetching: isLoadingVendor } = useGetVendorMeQueryState()
+
+  const isLoading = isLoadingLogin || isLoadingVendor
 
   const {
     register,

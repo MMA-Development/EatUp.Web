@@ -1,7 +1,7 @@
 import { Breadcrumb } from '@chakra-ui/react'
 import { isMatch, Link, useMatches } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export function Breadcrumbs() {
   const { t } = useTranslation()

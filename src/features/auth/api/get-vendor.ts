@@ -4,8 +4,8 @@ import { logout, setVendor } from '@features/auth/store'
 
 export const vendor = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
-    getVendor: builder.query<VendorResponse, string>({
-      query: (vendorId) => `/vendors/${vendorId}`,
+    getVendorMe: builder.query<VendorResponse, void>({
+      query: () => `/vendors/me`,
       onQueryStarted: async (_credentials, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled
@@ -17,3 +17,5 @@ export const vendor = eatupApi.injectEndpoints({
     })
   })
 })
+
+export const { useQueryState: useGetVendorMeQueryState } = vendor.endpoints.getVendorMe
