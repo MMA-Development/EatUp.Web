@@ -1,10 +1,10 @@
 import { eatupApi } from '@lib/api-slice.ts'
-import { SignupPayload } from '../types'
+import { SignupPayload, SignupResponse } from '../types'
 import { authenticate } from '@features/auth/api/login.ts'
 
 export const signup = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
-    signup: builder.mutation<string, SignupPayload>({
+    signup: builder.mutation<SignupResponse, SignupPayload>({
       query: (body) => ({
         url: '/vendors/signup',
         method: 'POST',

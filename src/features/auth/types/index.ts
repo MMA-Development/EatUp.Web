@@ -24,6 +24,15 @@ export const SignupPayloadSchema = z.object({
 
 export type SignupPayload = z.infer<typeof SignupPayloadSchema>
 
+export const SignupResponseSchema = z.object({
+  created: z.number(),
+  expires_at: z.number(),
+  object: z.string(),
+  url: z.string().url()
+})
+
+export type SignupResponse = z.infer<typeof SignupResponseSchema>
+
 export type LoginResponse = z.infer<typeof LoginResponseSchema>
 
 export const VendorResponseSchema = z.object({
