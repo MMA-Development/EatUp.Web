@@ -10,12 +10,13 @@ import {
   Pagination,
   Portal,
   Select,
+  Separator,
   Table,
   useBreakpointValue
 } from '@chakra-ui/react'
 import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { useDeleteMealMutation } from '../api/delete-meal'
 
 const limitList = createListCollection({
@@ -151,8 +152,10 @@ export function MealList() {
                 <LuChevronRight />
               </IconButton>
             </Pagination.NextTrigger>
+            <Separator orientation="vertical" h={6} />
             <Pagination.PageText ml={'auto'} format="long" flex="1" />
           </ButtonGroup>
+          <Separator orientation="vertical" h={6} />
           <Select.Root
             defaultValue={[String(limit)]}
             onValueChange={(e) => {
