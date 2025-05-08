@@ -14,9 +14,10 @@ import { CustomLink } from '@components/ui/custom-link.tsx'
 import { useSignupMutation } from '@features/auth/api/signup.ts'
 import { SignupPayload, SignupPayloadSchema } from '@features/auth/types'
 import { useLazyForwardGeocodeQuery } from '@features/map/api/forward-geocode.ts'
+import { usePoiMutation } from '@features/map/api/poi.ts'
 import { RecenterAutomatically } from '@features/map/components/recenter.tsx'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LatLngExpression } from 'leaflet'
+import { DragEndEvent, LatLngExpression } from 'leaflet'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
@@ -35,13 +36,13 @@ export function SignupForm() {
 
   const [signup, { isLoading, isError }] = useSignupMutation()
   const [lookup, { data }] = useLazyForwardGeocodeQuery()
+  const [checkPOI] = usePoiMutation()
 
   const defaultPosition = [55.3997225, 10.3852104] satisfies LatLngExpression
 
   const [address, setAddress] = useState<string>('')
   const [markerPos, setMarkerPos] = useState<LatLngExpression>(defaultPosition)
 
-  // Update marker when geocode result changes
   useEffect(() => {
     if (data && data.length > 0 && data[0].lat && data[0].lon) {
       const lat = Number(data[0].lat)
@@ -53,8 +54,7 @@ export function SignupForm() {
     }
   }, [data, setValue])
 
-  // Handle drag end to reposition marker
-  function onMarkerDragEnd(event: any) {
+  function onMarkerDragEnd(event: DragEndEvent) {
     const latlng = event.target.getLatLng()
     setMarkerPos([latlng.lat, latlng.lng])
     setValue('latitude', latlng.lat)
@@ -63,7 +63,23 @@ export function SignupForm() {
 
   async function onSubmit(data: SignupPayload) {
     try {
-      await signup(data).unwrap()
+      const poiRes = await checkPOI({
+        lat: data.latitude,
+        lon: data.longitude,
+        radius: 50
+      }).unwrap()
+
+      console.log(poiRes)
+      const found = poiRes?.elements.length > 0
+      console.log(found)
+
+      if (!found) {
+        alert('Your location must be near a supermarket, restaurant, or gas station.')
+        return
+      }
+
+      const res = await signup(data).unwrap()
+      window.open(res.url)
     } catch (e) {
       console.error(e)
     }
@@ -117,7 +133,7 @@ export function SignupForm() {
               <Field.Label>Address</Field.Label>
               <Input onChange={(e) => setAddress(e.target.value)} value={address} />
             </Field.Root>
-            <Button alignSelf={'end'} onClick={() => lookup(address, true)}>
+            <Button alignSelf={'end'} onClick={() => lookup(address)}>
               Søg
             </Button>
           </HStack>
@@ -158,7 +174,7 @@ export function SignupForm() {
 
         <HStack>
           <Button loading={isLoading} type="submit" alignSelf="flex-start">
-            Submit
+            Opret dig
           </Button>
           <Separator orientation="vertical" h={8} />
           <Text>
