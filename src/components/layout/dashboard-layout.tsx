@@ -15,22 +15,27 @@ import {
 import { Breadcrumbs } from '@components/ui/breadcrumbs.tsx'
 import { ColorModeButton } from '@components/ui/color-mode.tsx'
 import { LanguageSelector } from '@components/ui/language-selector.tsx'
+import { Tooltip } from '@components/ui/tooltip.tsx'
+import { UserMenu } from '@features/auth/components/user-menu.tsx'
+import { selectVendor } from '@features/auth/store'
+import { useReverseGeocodeQuery } from '@features/map/api/reverse-geocode.ts'
+import { LocalStorage, useLocalStorage } from '@hooks/use-local-storage.ts'
+import { useAppSelector } from '@store/hooks.ts'
 import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuLayoutDashboard, LuSalad } from 'react-icons/lu'
-import { UserMenu } from '@features/auth/components/user-menu.tsx'
-import { useAppSelector } from '@store/hooks.ts'
-import { selectVendor } from '@features/auth/store'
-import { LocalStorage, useLocalStorage } from '@hooks/use-local-storage.ts'
-import { Tooltip } from '@components/ui/tooltip.tsx'
-import { useEffect } from 'react'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
   const location = useRouterState({ select: (s) => s.location })
 
   const vendor = useAppSelector(selectVendor)
+  const { data: address } = useReverseGeocodeQuery({
+    lat: vendor?.latitude.toString() || '',
+    lon: vendor?.longitude.toString() || ''
+  })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -78,9 +83,11 @@ export function DashboardLayout() {
               <Text textStyle={'sm'} color={'fg'} fontWeight={'semibold'}>
                 {vendor.name}
               </Text>
-              <Text textStyle={'xs'} color={'fg.muted'}>
-                {vendor.cvr}
-              </Text>
+              {address && address.address && (
+                <Text textStyle={'xs'} color={'fg.muted'}>
+                  {address.address.road} {address.address.house_number}, {address.address.village}
+                </Text>
+              )}
             </Stack>
           </HStack>
         </Flex>

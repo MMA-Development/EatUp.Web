@@ -2,6 +2,7 @@ import { router } from '@app/router.ts'
 import { vendor } from '@features/auth/api/get-vendor.ts'
 import { authenticate } from '@features/auth/api/login.ts'
 import { logout, selectVendor, setToken, setUser } from '@features/auth/store'
+import { reverseGeocode } from '@features/map/api/reverse-geocode.ts'
 import { startAppListening } from '@store/listenerMiddleware.ts'
 import { RootState } from '@store/types.ts'
 
@@ -45,6 +46,13 @@ export function setupAuthListeners(): void {
         console.error('Failed to fetch vendor:', result.error)
         listenerApi.dispatch(logout())
         return
+      }
+
+      if (result.data) {
+        reverseGeocode.endpoints.reverseGeocode.initiate({
+          lat: result.data.latitude.toString(),
+          lon: result.data.longitude.toString()
+        })
       }
 
       // wait for the vendor to be set
