@@ -13,7 +13,7 @@ export function Providers({ children }: PropsWithChildren) {
     <ChakraProvider>
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
-          <PersistGate persistor={persistor}>
+          <PersistGate persistor={persistor as never}>
             {children}
             <Toaster />
           </PersistGate>

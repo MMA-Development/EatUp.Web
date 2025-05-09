@@ -2,7 +2,7 @@ import { eatupApi } from '@lib/api-slice.ts'
 import { configureStore } from '@reduxjs/toolkit'
 import { listenerMiddleware } from '@store/listenerMiddleware.ts'
 import { rootReducer } from '@store/root-reducer.ts'
-import { persistReducer, persistStore } from 'redux-persist'
+import { Persistor, persistReducer, persistStore } from 'redux-persist'
 import { encryptTransform } from 'redux-persist-transform-encrypt'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants'
 import storage from 'redux-persist/lib/storage'
@@ -35,4 +35,4 @@ export const store = configureStore({
       .concat(listenerMiddleware.middleware)
 })
 
-export const persistor = persistStore(store)
+export const persistor: Persistor = persistStore(store)

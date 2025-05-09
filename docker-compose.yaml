@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  eu-spa:
+    image: eu-spa:v1.0 
+    ports:
+      - "8080:80"
+    environment:
+      MY_APP_API_BASE_URL: http://localhost:5025
+      MY_APP_ENCRYPT_KEY: this_is_a_secret_key
