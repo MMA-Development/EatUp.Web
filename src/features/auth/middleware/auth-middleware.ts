@@ -1,10 +1,9 @@
 import { router } from '@app/router.ts'
-import { vendor } from '@features/auth/api/get-vendor.ts'
-import { authenticate } from '@features/auth/api/login.ts'
+import { vendor } from '../api/get-vendor.ts'
+import { authenticate } from '../api/login.ts'
 import { logout, selectVendor, setToken, setUser } from '@features/auth/store'
 import { reverseGeocode } from '@features/map/api/reverse-geocode.ts'
 import { startAppListening } from '@store/listenerMiddleware.ts'
-import { RootState } from '@store/types.ts'
 
 /**
  * Sets up authentication listeners for the application.
@@ -56,7 +55,7 @@ export function setupAuthListeners(): void {
       }
 
       // wait for the vendor to be set
-      await listenerApi.condition((_, state) => selectVendor(state as RootState) !== null)
+      await listenerApi.condition((_, state) => selectVendor(state) !== null)
 
       // now vendor is guaranteed set - redirect to dashboard or redirect search param
       const { redirect = '/dashboard' } = router.state.location.search
