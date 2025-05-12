@@ -11,6 +11,9 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { RootState } from '@store/types'
 import { isProduction } from '@utils/env.ts'
 import { ZodError, ZodSchema } from 'zod'
+import { Mutex } from 'async-mutex'
+
+const mutex = new Mutex()
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL,
@@ -28,6 +31,12 @@ export const baseQuery = fetchBaseQuery({
   }
 })
 
+/**
+ * A custom base query wrapper for RTK Query that adds:
+ *  - Zod argument validation (input schema)
+ *  - Zod data validation (response schema)
+ *  - Automatic token refresh handling with a mutex lock to prevent race conditions
+ */
 export const baseQueryWithValidation: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -35,6 +44,7 @@ export const baseQueryWithValidation: BaseQueryFn<
   { argumentSchema?: ZodSchema; dataSchema?: ZodSchema },
   FetchBaseQueryMeta
 > = async (args, api, extraOptions = {}) => {
+  await mutex.waitForUnlock()
   if (extraOptions.argumentSchema) {
     try {
       extraOptions.argumentSchema.parse(args)
@@ -51,24 +61,33 @@ export const baseQueryWithValidation: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions)
 
   if (result.error && result.error.status === 401) {
-    // try to get a new token
-    const refreshResult = await baseQuery(
-      {
-        url: '/vendors/token',
-        method: 'POST',
-        body: `"${(api.getState() as RootState).auth.token?.refreshToken}"`
-      },
-      api,
-      extraOptions
-    )
-    if (refreshResult.data) {
-      const token = refreshResult.data as LoginResponse
-      // store the new tokens
-      api.dispatch(setToken(token))
-      // retry the initial query
-      result = await baseQuery(args, api, extraOptions)
+    if (!mutex.isLocked()) {
+      const release = await mutex.acquire()
+      try {
+        // try to get a new token
+        const refreshResult = await baseQuery(
+          {
+            url: '/vendors/token',
+            method: 'POST',
+            body: `"${(api.getState() as RootState).auth.token?.refreshToken}"`
+          },
+          api,
+          extraOptions
+        )
+        if (refreshResult.data) {
+          const token = refreshResult.data as LoginResponse
+          // store the new tokens
+          api.dispatch(setToken(token))
+          // retry the initial query
+          result = await baseQuery(args, api, extraOptions)
+        } else {
+          api.dispatch(logout())
+        }
+      } finally {
+        release()
+      }
     } else {
-      api.dispatch(logout())
+      await mutex.waitForUnlock()
     }
   }
 
