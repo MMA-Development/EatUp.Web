@@ -5,6 +5,7 @@ import { textareaRecipe } from './recipes/textarea.ts'
 import { menuSlotRecipe } from '@theme/recipes/menu.ts'
 import { selectSlotRecipe } from '@theme/recipes/select.ts'
 import { badgeRecipe } from '@theme/recipes/badge.ts'
+import { cardSlotRecipe } from '@theme/recipes/card.ts'
 
 const customConfig = defineConfig({
   theme: {
@@ -16,7 +17,8 @@ const customConfig = defineConfig({
     },
     slotRecipes: {
       menu: menuSlotRecipe,
-      select: selectSlotRecipe
+      select: selectSlotRecipe,
+      card: cardSlotRecipe
     }
   }
 })
