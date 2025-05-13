@@ -25,7 +25,7 @@ import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
-import { LuFactory, LuLayoutDashboard, LuSalad } from 'react-icons/lu'
+import { LuFactory, LuLayoutDashboard, LuPackage, LuSalad } from 'react-icons/lu'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -57,7 +57,17 @@ export function DashboardLayout() {
   const dashboardRoute = routesByPath['/dashboard']
   const dashboardRoutes = Object.values(
     dashboardRoute.children
-      ? dashboardRoute.children.filter((r) => r.options.staticData?.displayOnNav === true)
+      ? dashboardRoute.children.filter(
+          (r) => r.options.staticData?.displayOnNav === true && r.fullPath.includes('meals')
+        )
+      : {}
+  )
+
+  const orderRoutes = Object.values(
+    dashboardRoute.children
+      ? dashboardRoute.children.filter(
+          (r) => r.options.staticData?.displayOnNav === true && r.fullPath.includes('orders')
+        )
       : {}
   )
 
@@ -144,6 +154,53 @@ export function DashboardLayout() {
               </Tooltip>
               <Accordion.ItemContent pt={2}>
                 {dashboardRoutes.map((route) => (
+                  <Stack key={route.id} flexDirection={'row'} ml={6}>
+                    <Separator orientation="vertical" h={10} />
+                    <Accordion.ItemBody p={0} w={'100%'}>
+                      <Button
+                        w={'100%'}
+                        size={'sm'}
+                        variant={route.fullPath === location.pathname ? 'subtle' : 'ghost'}
+                        justifyContent={'flex-start'}
+                        onClick={() => navigate({ to: route.fullPath })}
+                      >
+                        {route.options.staticData?.name ? t(route.options.staticData.name) : ''}
+                      </Button>
+                    </Accordion.ItemBody>
+                  </Stack>
+                ))}
+              </Accordion.ItemContent>
+            </Accordion.Item>
+          </Accordion.Root>
+        </Stack>
+        <Stack my={2}>
+          <Text textStyle={'xs'} color={'fg.muted'} display={sidebarCollapsed ? 'none' : 'flex'}>
+            Order håndtering
+          </Text>
+          <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
+            <Accordion.Item value={'meal'}>
+              <Tooltip
+                positioning={{ placement: 'right' }}
+                openDelay={sidebarCollapsed ? 50 : 500}
+                content={'Ordre'}
+              >
+                <Accordion.ItemTrigger asChild w={'100%'}>
+                  <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
+                    <Icon fontSize="lg" color="fg.subtle">
+                      <LuPackage />
+                    </Icon>
+                    <Span display={sidebarCollapsed ? 'none' : 'flex'} textStyle={'sm'}>
+                      Ordre
+                    </Span>
+                    <Accordion.ItemIndicator
+                      display={sidebarCollapsed ? 'none' : 'flex'}
+                      ml={'auto'}
+                    />
+                  </Button>
+                </Accordion.ItemTrigger>
+              </Tooltip>
+              <Accordion.ItemContent pt={2}>
+                {orderRoutes.map((route) => (
                   <Stack key={route.id} flexDirection={'row'} ml={6}>
                     <Separator orientation="vertical" h={10} />
                     <Accordion.ItemBody p={0} w={'100%'}>
