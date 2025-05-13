@@ -88,6 +88,7 @@ export const baseQueryWithValidation: BaseQueryFn<
       }
     } else {
       await mutex.waitForUnlock()
+      result = await baseQuery(args, api, extraOptions)
     }
   }
 
