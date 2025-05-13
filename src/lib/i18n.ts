@@ -1,4 +1,5 @@
 import daAuth from '@features/auth/locale/da.json'
+import daOrders from '@features/orders/locale/da.json'
 import enAuth from '@features/auth/locale/en.json'
 import daCommon from '@locales/da/da.common.json'
 import daZod from '@locales/da/da.zod.json'
@@ -27,6 +28,7 @@ await i18next
       da: {
         common: daCommon,
         auth: daAuth,
+        orders: daOrders,
         zod: daZod
       }
     },

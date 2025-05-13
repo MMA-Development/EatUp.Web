@@ -114,7 +114,7 @@ export function DashboardLayout() {
               size={'sm'}
               variant={'ghost'}
               justifyContent={'flex-start'}
-              onClick={() => navigate({ to: '/dashboard' })}
+              onClick={() => navigate({ to: '/dashboard/stats' })}
             >
               <Icon fontSize="lg" color="fg.subtle">
                 <LuLayoutDashboard />

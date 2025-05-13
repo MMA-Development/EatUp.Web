@@ -9,7 +9,7 @@ import { OrderResponse, OrderResponseSchema } from '@features/orders/types'
 export const orders = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<PaginatedResponse<OrderResponse>, ApiPaginationWithSearch | void>({
-      query: (pagination) => ({
+      query: (pagination = { skip: 0, limit: 10 }) => ({
         url: `/orders/vendor?skip=${pagination?.skip}&take=${pagination?.limit}${pagination && pagination.query ? `&search=${pagination.query}` : ''}`
       }),
       extraOptions: {
