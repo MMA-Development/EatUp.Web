@@ -58,7 +58,7 @@ export function setupAuthListeners(): void {
       await listenerApi.condition((_, state) => selectVendor(state) !== null)
 
       // now vendor is guaranteed set - redirect to dashboard or redirect search param
-      const { redirect = '/dashboard' } = router.state.location.search
+      const { redirect = '/dashboard/stats' } = router.state.location.search
       router.navigate({ to: redirect })
     }
   })
