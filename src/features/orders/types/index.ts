@@ -9,11 +9,9 @@ export const OrderResponseSchema = z.object({
   paymentStatus: z.string(),
   paymentId: z.string(),
   price: z.number(),
-  stripeCustomerId: z.string(),
+  quantity: z.number(),
   id: z.string(),
-  deletedAt: z.null(),
-  createdAt: z.string(),
-  updatedAt: z.string()
+  createdAt: z.string()
 })
 
 export type OrderResponse = z.infer<typeof OrderResponseSchema>

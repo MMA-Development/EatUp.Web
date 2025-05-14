@@ -15,7 +15,7 @@ export function OrdersTodaySparkline() {
 
   const { data, isLoading, isError, refetch, isFetching } = useGetOrdersQuery()
   const [todayOrders, setTodayOrders] = useState<OrderResponse[]>([])
-  const yesterdaysOrders = 34
+  const yesterdaysOrders = 1
 
   useEffect(() => {
     if (data && data.items) {
@@ -27,28 +27,26 @@ export function OrdersTodaySparkline() {
     }
   }, [data])
 
+  useEffect(() => {
+    setValue(todayOrders.length)
+  }, [todayOrders])
+
   const chartData = Array.from({ length: 24 }, (_, hour) => {
-    const count = todayOrders.filter((order) => moment(order.createdAt).hour() === hour).length
+    const count = todayOrders.filter(
+      (order) => moment.utc(order.createdAt).local().hour() === hour
+    ).length
     return { time: `${hour}:00`, count }
   })
 
   const chart = useChart({
-    data: [
-      { time: '08:00', count: 8 },
-      { time: '10:00', count: 5 },
-      { time: '12:00', count: 14 },
-      { time: '14:00', count: 11 },
-      { time: '16:00', count: 15 },
-      { time: '18:00', count: 4 }
-    ],
+    data: chartData,
     series: [{ name: 'count', color: 'green.solid' }]
   })
 
   const lastIndex = chart.data.length - 1
-  const totalCount = chart.data.map((item) => item.count).reduce((a, b) => a + b, 0)
-  const [value, setValue] = useState(totalCount)
+  const [value, setValue] = useState(todayOrders.length)
   const [label, setLabel] = useState<string | undefined>(undefined)
-  const percentage = ((totalCount - yesterdaysOrders) / yesterdaysOrders) * 100
+  const percentage = ((todayOrders.length - yesterdaysOrders) / yesterdaysOrders) * 100
 
   const onMouseMove = (state: CategoricalChartState) => {
     const index = state.activeTooltipIndex ?? lastIndex
@@ -58,12 +56,12 @@ export function OrdersTodaySparkline() {
   }
 
   const onMouseLeave = () => {
-    setValue(totalCount)
+    setValue(todayOrders.length)
     setLabel(undefined)
   }
 
   return (
-    <Card.Root maxW="sm" size="sm" overflow="hidden">
+    <Card.Root size="sm" overflow="hidden">
       <Skeleton loading={isLoading}>
         <Card.Body>
           <Stat.Root>
@@ -118,7 +116,7 @@ export function OrdersTodaySparkline() {
                 activeDot={{ stroke: chart.color('bg') }}
                 key={item.name}
                 isAnimationActive={true}
-                type={'natural'}
+                type={'bump'}
                 dataKey={chart.key(item.name)}
                 fill={chart.color(item.color)}
                 fillOpacity={0.2}

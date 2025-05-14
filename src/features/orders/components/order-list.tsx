@@ -42,7 +42,6 @@ export function OrderList() {
       <Table.Root size="sm">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader>Ordre nr.</Table.ColumnHeader>
             <Table.ColumnHeader>Bruger</Table.ColumnHeader>
             <Table.ColumnHeader>Måltidspakke nr.</Table.ColumnHeader>
             <Table.ColumnHeader>Måltidspakke</Table.ColumnHeader>
@@ -63,7 +62,7 @@ export function OrderList() {
               <Table.Cell>{order.paymentStatus}</Table.Cell>
               <Table.Cell>{order.paymentId}</Table.Cell>
               <Table.Cell>{order.price}</Table.Cell>
-              <Table.Cell>{order.stripeCustomerId}</Table.Cell>
+              <Table.Cell>{order.paymentId}</Table.Cell>
               <Table.Cell cursor="pointer">
                 <Tooltip content={moment(order.createdAt).locale(language).format('LLLL')}>
                   <span>{moment(order.createdAt).locale(language).fromNow()}</span>
