@@ -2,10 +2,8 @@ import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
 import { buttonRecipe } from './recipes/button.ts'
 import { inputRecipe } from './recipes/input.ts'
 import { textareaRecipe } from './recipes/textarea.ts'
-import { menuSlotRecipe } from '@theme/recipes/menu.ts'
-import { selectSlotRecipe } from '@theme/recipes/select.ts'
-import { badgeRecipe } from '@theme/recipes/badge.ts'
-import { cardSlotRecipe } from '@theme/recipes/card.ts'
+import { badgeRecipe } from './recipes/badge.ts'
+import { slotRecipes } from './slot-recipes.ts'
 
 const customConfig = defineConfig({
   theme: {
@@ -15,11 +13,7 @@ const customConfig = defineConfig({
       textarea: textareaRecipe,
       badge: badgeRecipe
     },
-    slotRecipes: {
-      menu: menuSlotRecipe,
-      select: selectSlotRecipe,
-      card: cardSlotRecipe
-    }
+    slotRecipes
   }
 })
 
