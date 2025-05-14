@@ -74,8 +74,12 @@ export function SignupForm() {
       console.log(found)
 
       if (!found) {
-        alert('Your location must be near a supermarket, restaurant, or gas station.')
-        return
+        const confirmLocation = confirm(
+          'No supermarket, restaurant, or gas station was found on the given location. Do you want to continue?'
+        )
+        if (!confirmLocation) {
+          return
+        }
       }
 
       const res = await signup(data).unwrap()
