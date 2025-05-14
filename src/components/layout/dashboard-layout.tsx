@@ -245,7 +245,7 @@ export function DashboardLayout() {
               <FiSidebar />
             </IconButton>
             <Separator orientation="vertical" h={6} />
-            <Breadcrumbs />
+            {!mobile && <Breadcrumbs />}
             <LanguageSelector size={'sm'} ml={'auto'} w={{ base: '75px', md: '200px' }} />
             <ColorModeButton variant={'outline'} />
           </HStack>
