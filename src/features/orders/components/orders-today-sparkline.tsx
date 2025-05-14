@@ -1,18 +1,19 @@
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { Chart, useChart } from '@chakra-ui/charts'
-import { Badge, Box, Card, HStack, Skeleton, Stat } from '@chakra-ui/react'
+import { Badge, Box, Card, HStack, IconButton, Skeleton, Stat } from '@chakra-ui/react'
 import { LuPackage } from 'react-icons/lu'
 import { Area, AreaChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { useGetOrdersQuery } from '@features/orders/api/get-orders.ts'
 import { OrderResponse } from '@features/orders/types'
 import { CategoricalChartState } from 'recharts/types/chart/types'
 import { useTranslation } from 'react-i18next'
+import { IoRefresh } from 'react-icons/io5'
 
 export function OrdersTodaySparkline() {
   const { t } = useTranslation('orders')
 
-  const { data, isLoading, isError } = useGetOrdersQuery()
+  const { data, isLoading, isError, refetch, isFetching } = useGetOrdersQuery()
   const [todayOrders, setTodayOrders] = useState<OrderResponse[]>([])
   const yesterdaysOrders = 34
 
@@ -66,9 +67,21 @@ export function OrdersTodaySparkline() {
       <Skeleton loading={isLoading}>
         <Card.Body>
           <Stat.Root>
-            <Stat.Label>
-              <LuPackage /> {t('todays.orders')}
-            </Stat.Label>
+            <HStack>
+              <Stat.Label>
+                <LuPackage /> {t('todays.orders')}
+              </Stat.Label>
+              <IconButton
+                variant={'outline'}
+                size={'xs'}
+                ml={'auto'}
+                loading={isFetching}
+                onClick={refetch}
+                aria-label={'refresh'}
+              >
+                <IoRefresh />
+              </IconButton>
+            </HStack>
             <HStack>
               <Stat.ValueText>
                 {isLoading ? 'Loading...' : isError ? 'Error' : `${value}`}
