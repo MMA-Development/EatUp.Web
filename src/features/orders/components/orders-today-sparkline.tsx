@@ -84,8 +84,8 @@ export function OrdersTodaySparkline() {
               <Stat.ValueText>
                 {isLoading ? 'Loading...' : isError ? 'Error' : `${value}`}
               </Stat.ValueText>
-              <Badge colorPalette="green" gap="0">
-                <Stat.UpIndicator />
+              <Badge colorPalette={percentage > 0 ? 'green' : 'red'} gap="0">
+                {percentage > 0 ? <Stat.UpIndicator /> : <Stat.DownIndicator />}
                 {percentage.toFixed(0)}%
               </Badge>
               {label && (
