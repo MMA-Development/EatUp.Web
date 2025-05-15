@@ -52,17 +52,8 @@ export const MealPayloadSchema = z
       })
     }
 
-    const now = new Date()
     const first = new Date(data.firstAvailablePickup)
     const last = new Date(data.lastAvailablePickup)
-
-    if (first < now) {
-      ctx.addIssue({
-        path: ['firstAvailablePickup'],
-        code: z.ZodIssueCode.custom,
-        message: 'First pickup must be in the future'
-      })
-    }
 
     if (!isNaN(first.getTime()) && !isNaN(last.getTime()) && first >= last) {
       ctx.addIssue({

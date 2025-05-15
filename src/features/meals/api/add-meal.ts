@@ -1,5 +1,4 @@
 import { MealPayload } from '@features/meals/types'
-
 import { eatupApi } from '@lib/api-slice.ts'
 
 export const meals = eatupApi.injectEndpoints({

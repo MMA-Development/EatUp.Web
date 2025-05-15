@@ -14,6 +14,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { useUpdateMealMutation } from '@features/meals/api/update-meal.ts'
 import { toaster } from '@components/ui/toaster.tsx'
+import { useMemo } from 'react'
+import moment from 'moment'
+import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 
 interface MealFormProps {
   meal?: Meal
@@ -22,9 +25,22 @@ interface MealFormProps {
 export function MealForm({ meal }: MealFormProps) {
   const [addMeal, { isLoading: isAdding }] = useAddMealMutation()
   const [updateMeal, { isLoading: isUpdating }] = useUpdateMealMutation()
+  const [refetchMeals] = useLazyGetMealsQuery()
 
   const isEditing = !!meal?.id
   const isLoading = isAdding || isUpdating
+
+  const defaultValues = useMemo(() => {
+    if (!meal) return undefined
+    return {
+      ...meal,
+      firstAvailablePickup: moment
+        .utc(meal.firstAvailablePickup)
+        .local()
+        .format('YYYY-MM-DDTHH:mm'),
+      lastAvailablePickup: moment.utc(meal.lastAvailablePickup).local().format('YYYY-MM-DDTHH:mm')
+    }
+  }, [meal])
 
   const {
     register,
@@ -33,17 +49,16 @@ export function MealForm({ meal }: MealFormProps) {
     formState: { errors },
     handleSubmit
   } = useForm<MealPayload>({
-    defaultValues: meal,
+    defaultValues,
     resolver: zodResolver(MealPayloadSchema)
   })
 
   async function onSubmit(data: MealPayload) {
     try {
       if (isEditing) {
-        await updateMeal({ id: meal!.id, meal: data }).unwrap()
+        await updateMeal({ id: meal.id, meal: data }).unwrap()
       } else {
         await addMeal(data).unwrap()
-        reset()
       }
     } catch (e) {
       console.error(e)
@@ -51,6 +66,9 @@ export function MealForm({ meal }: MealFormProps) {
         title: isEditing ? 'Failed to update meal' : 'Failed to create meal',
         type: 'error'
       })
+    } finally {
+      reset()
+      refetchMeals({ limit: 10, skip: 0 })
     }
   }
 
