@@ -8,6 +8,7 @@ import {
   Portal,
   Select,
   Separator,
+  Status,
   Table,
   useBreakpointValue
 } from '@chakra-ui/react'
@@ -16,6 +17,7 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import moment from 'moment'
 import { Tooltip } from '@components/ui/tooltip.tsx'
 import { useTranslation } from 'react-i18next'
+import { CustomLink } from '@components/ui/custom-link.tsx'
 
 const limitList = createListCollection({
   items: [
@@ -42,28 +44,40 @@ export function OrderList() {
       <Table.Root size="sm">
         <Table.Header>
           <Table.Row>
+            <Table.ColumnHeader>Ordre nr.</Table.ColumnHeader>
             <Table.ColumnHeader>Bruger</Table.ColumnHeader>
-            <Table.ColumnHeader>Måltidspakke nr.</Table.ColumnHeader>
             <Table.ColumnHeader>Måltidspakke</Table.ColumnHeader>
             <Table.ColumnHeader>Betalingsstatus</Table.ColumnHeader>
             <Table.ColumnHeader>Betalings id</Table.ColumnHeader>
             <Table.ColumnHeader>Pris</Table.ColumnHeader>
-            <Table.ColumnHeader>Betalings kundenr.</Table.ColumnHeader>
             <Table.ColumnHeader>Oprettet</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {data.map((order, index) => (
             <Table.Row key={index}>
-              <Table.Cell>{order.id}</Table.Cell>
+              <Table.Cell cursor="help">
+                <Tooltip interactive={true} content={order.id}>
+                  <span>{order.id.substring(0, 8)}...</span>
+                </Tooltip>
+              </Table.Cell>
               <Table.Cell>{order.userName}</Table.Cell>
-              <Table.Cell>{order.foodPackageId}</Table.Cell>
-              <Table.Cell>{order.foodPackageTitle}</Table.Cell>
-              <Table.Cell>{order.paymentStatus}</Table.Cell>
+              <Table.Cell>
+                <CustomLink to={'/dashboard/meals/$id'} params={{ id: order.foodPackageId }}>
+                  {order.foodPackageTitle}
+                </CustomLink>
+              </Table.Cell>
+              <Table.Cell>
+                <HStack>
+                  {order.paymentStatus}{' '}
+                  <Status.Root colorPalette={order.paymentStatus === 'Pending' ? 'orange' : 'green'}>
+                    <Status.Indicator />
+                  </Status.Root>
+                </HStack>
+              </Table.Cell>
               <Table.Cell>{order.paymentId}</Table.Cell>
-              <Table.Cell>{order.price}</Table.Cell>
-              <Table.Cell>{order.paymentId}</Table.Cell>
-              <Table.Cell cursor="pointer">
+              <Table.Cell>{order.price} kr.</Table.Cell>
+              <Table.Cell cursor="help">
                 <Tooltip content={moment(order.createdAt).locale(language).format('LLLL')}>
                   <span>{moment(order.createdAt).locale(language).fromNow()}</span>
                 </Tooltip>
