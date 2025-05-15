@@ -17,6 +17,8 @@ import { toaster } from '@components/ui/toaster.tsx'
 import { useMemo } from 'react'
 import moment from 'moment'
 import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
+import { useAppSelector } from '@store/hooks.ts'
+import { selectVendor } from '@features/auth/store'
 
 interface MealFormProps {
   meal?: Meal
@@ -26,6 +28,8 @@ export function MealForm({ meal }: MealFormProps) {
   const [addMeal, { isLoading: isAdding }] = useAddMealMutation()
   const [updateMeal, { isLoading: isUpdating }] = useUpdateMealMutation()
   const [refetchMeals] = useLazyGetMealsQuery()
+
+  const vendor = useAppSelector(selectVendor)
 
   const isEditing = !!meal?.id
   const isLoading = isAdding || isUpdating
@@ -81,6 +85,8 @@ export function MealForm({ meal }: MealFormProps) {
         </Stack>
 
         <Fieldset.Content>
+          <Input display={'none'} {...register('vendorName')} value={vendor!.name} />
+
           <Field.Root invalid={Boolean(errors.title)} required>
             <Field.Label>Title</Field.Label>
             <Input {...register('title')} />

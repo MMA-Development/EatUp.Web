@@ -19,7 +19,7 @@ export type Meal = z.infer<typeof MealSchema>
 
 export const MealPayloadSchema = z
   .object({
-    vendorName: z.string().default('Super Brugsen'),
+    vendorName: z.string(),
     title: z.string(),
     originalPrice: z.number().min(1),
     price: z.number().min(1),
