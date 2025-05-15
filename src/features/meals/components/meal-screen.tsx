@@ -14,18 +14,20 @@ export function MealScreen() {
 
   const inputRef = useInputFocusHotkey()
 
-  const { query, skip, limit } = useSearch({ from: '/dashboard/meals' })
-  const { refetch, isFetching } = useGetMealsQuery({ skip, limit, query })
+  const { query, skip, take } = useSearch({ from: '/dashboard/meals' })
+  const { refetch, isFetching } = useGetMealsQuery({ skip, take, query })
 
-  const [searchValue, setSearchValue] = useDebouncedState(query ?? '', 300)
+  const [searchValue, setSearchValue] = useDebouncedState(query, 300)
 
   useEffect(() => {
-    void navigate({
-      to: '/dashboard/meals',
-      search: (old) => ({ query: searchValue, limit: old.limit }),
-      replace: true
-    })
-  }, [navigate, searchValue])
+    if (searchValue !== undefined) {
+      void navigate({
+        to: '/dashboard/meals',
+        search: (old) => ({ query: searchValue, limit: old.limit }),
+        replace: true
+      })
+    }
+  }, [navigate, query, searchValue])
 
   return (
     <Flex direction={'column'}>
