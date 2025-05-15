@@ -33,7 +33,7 @@ export function MealList() {
   const [remove] = useDeleteMealMutation()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
-  const { limit } = useSearch({ from: '/dashboard/meals' })
+  const { take } = useSearch({ from: '/dashboard/meals' })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -119,12 +119,12 @@ export function MealList() {
         onPageChange={(page) =>
           navigate({
             to: '/dashboard/meals',
-            search: (old) => ({ ...old, skip: (page.page - 1) * limit }),
+            search: (old) => ({ ...old, skip: (page.page - 1) * take }),
             replace: true
           })
         }
         count={totalCount}
-        pageSize={limit}
+        pageSize={take}
         defaultPage={1}
       >
         <HStack>
@@ -157,11 +157,11 @@ export function MealList() {
           </ButtonGroup>
           <Separator orientation="vertical" h={6} />
           <Select.Root
-            defaultValue={[String(limit)]}
+            defaultValue={[String(take)]}
             onValueChange={(e) => {
               void navigate({
                 to: '/dashboard/meals',
-                search: (old) => ({ ...old, limit: Number(e.value[0]) }),
+                search: (old) => ({ ...old, take: Number(e.value[0]) }),
                 replace: true
               })
             }}

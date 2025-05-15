@@ -70,7 +70,9 @@ export function OrderList() {
               <Table.Cell>
                 <HStack>
                   {order.paymentStatus}{' '}
-                  <Status.Root colorPalette={order.paymentStatus === 'Pending' ? 'orange' : 'green'}>
+                  <Status.Root
+                    colorPalette={order.paymentStatus === 'Pending' ? 'orange' : 'green'}
+                  >
                     <Status.Indicator />
                   </Status.Root>
                 </HStack>

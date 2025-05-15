@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export interface ApiPagination {
   skip: number
-  limit: number
+  take: number
 }
 
 export interface ApiPaginationWithSearch extends ApiPagination {
