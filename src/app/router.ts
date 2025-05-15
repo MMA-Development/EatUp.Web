@@ -10,6 +10,7 @@ import { editMealRoute } from '@app/routes/dashboard/meals/edit-meal-route.ts'
 import { signupRoute } from '@app/routes/auth/signup-route.ts'
 import { ordersRoute } from '@app/routes/dashboard/orders/orders-route.ts'
 import { statsRoute } from '@app/routes/dashboard/stats/stats-route.ts'
+import { profileRoute } from '@app/routes/dashboard/profile/profile-route.ts'
 
 export interface RouterContext {
   auth: Auth
@@ -27,7 +28,8 @@ export const routeTree = rootRoute.addChildren([
     statsRoute,
     createMealRoute,
     editMealRoute,
-    ordersRoute
+    ordersRoute,
+    profileRoute
   ])
 ])
 

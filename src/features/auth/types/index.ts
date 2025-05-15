@@ -48,3 +48,7 @@ export const VendorResponseSchema = z.object({
 export type VendorResponse = z.infer<typeof VendorResponseSchema>
 
 export type Vendor = VendorResponse
+
+export const ProfileSchema = VendorResponseSchema.omit({ cvr: true, username: true, logo: true })
+
+export type Profile = z.infer<typeof ProfileSchema>

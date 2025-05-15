@@ -31,11 +31,12 @@ export function UserMenu() {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            <Menu.Item cursor={'pointer'} value="profile">
+            <Menu.Item
+              cursor={'pointer'}
+              value="profile"
+              onClick={() => navigate({ to: '/dashboard/profile' })}
+            >
               Profile
-            </Menu.Item>
-            <Menu.Item cursor={'pointer'} value="settings">
-              Settings
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item
