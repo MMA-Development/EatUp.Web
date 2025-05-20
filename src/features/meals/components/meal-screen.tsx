@@ -8,8 +8,11 @@ import { BiSearch } from 'react-icons/bi'
 import { useGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { IoRefresh } from 'react-icons/io5'
 import { Tooltip } from '@components/ui/tooltip.tsx'
+import { useTranslation } from 'react-i18next'
 
 export function MealScreen() {
+  const { t } = useTranslation('meals')
+
   const navigate = useNavigate()
 
   const inputRef = useInputFocusHotkey()
@@ -23,7 +26,7 @@ export function MealScreen() {
     if (searchValue !== undefined) {
       void navigate({
         to: '/dashboard/meals',
-        search: (old) => ({ query: searchValue, limit: old.limit }),
+        search: (old) => ({ query: searchValue, take: old.take }),
         replace: true
       })
     }
@@ -42,11 +45,11 @@ export function MealScreen() {
             defaultValue={query}
             size={'sm'}
             type="text"
-            placeholder={'search'}
-            aria-label={'search'}
+            placeholder={t('search')}
+            aria-label={t('search')}
           />
         </InputGroup>
-        <Tooltip content={'refresh data'}>
+        <Tooltip content={t('refresh.description')}>
           <Button
             w={'36px'}
             h={'36px'}
@@ -54,7 +57,7 @@ export function MealScreen() {
             onClick={refetch}
             variant={'outline'}
             size={'sm'}
-            aria-label={'refresh'}
+            aria-label={t('refresh')}
           >
             <IoRefresh />
           </Button>

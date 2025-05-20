@@ -35,7 +35,7 @@ export function OrderList() {
   } = useTranslation()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/orders' })
-  const { limit } = useSearch({ from: '/dashboard/orders' })
+  const { take } = useSearch({ from: '/dashboard/orders' })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -95,12 +95,12 @@ export function OrderList() {
         onPageChange={(page) =>
           navigate({
             to: '/dashboard/meals',
-            search: (old) => ({ ...old, skip: (page.page - 1) * limit }),
+            search: (old) => ({ ...old, skip: (page.page - 1) * take }),
             replace: true
           })
         }
         count={totalCount}
-        pageSize={limit}
+        pageSize={take}
         defaultPage={1}
       >
         <HStack>
@@ -133,11 +133,11 @@ export function OrderList() {
           </ButtonGroup>
           <Separator orientation="vertical" h={6} />
           <Select.Root
-            defaultValue={[String(limit)]}
+            defaultValue={[String(take)]}
             onValueChange={(e) => {
               void navigate({
                 to: '/dashboard/meals',
-                search: (old) => ({ ...old, limit: Number(e.value[0]) }),
+                search: (old) => ({ ...old, take: Number(e.value[0]) }),
                 replace: true
               })
             }}

@@ -12,7 +12,7 @@ export const createMealRoute = createRoute({
   },
   loader: () => {
     return {
-      crumb: 'Opret'
+      crumb: 'create'
     }
   }
 })

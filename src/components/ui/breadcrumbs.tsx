@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function Breadcrumbs() {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const matches = useMatches()
 
@@ -24,7 +24,7 @@ export function Breadcrumbs() {
             <Fragment key={match.id}>
               <Breadcrumb.Item>
                 {isLast ? (
-                  <Breadcrumb.CurrentLink>{label}</Breadcrumb.CurrentLink>
+                  <Breadcrumb.CurrentLink>{label ? t(label) : label}</Breadcrumb.CurrentLink>
                 ) : (
                   <Breadcrumb.Link asChild>
                     <Link to={path}>{label ? t(label) : label}</Link>

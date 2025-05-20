@@ -19,7 +19,7 @@ export const editMealRoute = createRoute({
     const data = await getMeal(params.id)
     return {
       data,
-      crumb: 'Meals'
+      crumb: 'meals'
     }
   },
   params: {

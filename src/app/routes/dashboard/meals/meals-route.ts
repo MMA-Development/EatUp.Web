@@ -28,7 +28,7 @@ export const mealsRoute = createRoute({
     name: 'overview'
   },
   pendingMinMs: 500,
-  pendingComponent: () => Pending({ message: 'Overblik' }),
+  pendingComponent: () => Pending({ message: 'overview' }),
   // We separate search params from the loader to ensure caching/preloading works correctly
   // it makes the data uniquely tied to the URL and avoids bugs.
   loaderDeps: ({ search: { skip, take, query } }) => ({ skip, take, query }),
@@ -40,7 +40,7 @@ export const mealsRoute = createRoute({
       data: res.items,
       page: res.page,
       totalCount: res.totalCount,
-      crumb: 'Meals'
+      crumb: 'meals'
     }
   },
   validateSearch: zodValidator(MealRouteSearchSchema),

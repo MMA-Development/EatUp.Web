@@ -14,15 +14,15 @@ export function OrderScreen() {
 
   const inputRef = useInputFocusHotkey()
 
-  const { query, skip, limit } = useSearch({ from: '/dashboard/orders' })
-  const { refetch, isFetching } = useGetOrdersQuery({ skip, limit, query })
+  const { query, skip, take } = useSearch({ from: '/dashboard/orders' })
+  const { refetch, isFetching } = useGetOrdersQuery({ skip, take, query })
 
   const [searchValue, setSearchValue] = useDebouncedState(query ?? '', 300)
 
   useEffect(() => {
     void navigate({
       to: '/dashboard/orders',
-      search: (old) => ({ query: searchValue, limit: old.limit }),
+      search: (old) => ({ query: searchValue, take: old.take }),
       replace: true
     })
   }, [navigate, searchValue])

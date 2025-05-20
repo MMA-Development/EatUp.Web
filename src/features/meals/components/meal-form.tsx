@@ -19,12 +19,15 @@ import moment from 'moment'
 import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { useAppSelector } from '@store/hooks.ts'
 import { selectVendor } from '@features/auth/store'
+import { useTranslation } from 'react-i18next'
 
 interface MealFormProps {
   meal?: Meal
 }
 
 export function MealForm({ meal }: MealFormProps) {
+  const { t } = useTranslation('meals')
+
   const [addMeal, { isLoading: isAdding }] = useAddMealMutation()
   const [updateMeal, { isLoading: isUpdating }] = useUpdateMealMutation()
   const [refetchMeals] = useLazyGetMealsQuery()
@@ -72,7 +75,7 @@ export function MealForm({ meal }: MealFormProps) {
       })
     } finally {
       reset()
-      refetchMeals({ limit: 10, skip: 0 })
+      refetchMeals({ take: 10, skip: 0 })
     }
   }
 
@@ -80,28 +83,27 @@ export function MealForm({ meal }: MealFormProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset.Root size="lg" maxW="md">
         <Stack>
-          <Fieldset.Legend>Måltid</Fieldset.Legend>
-          <Fieldset.HelperText>Please provide your contact details below.</Fieldset.HelperText>
+          <Fieldset.Legend>{t('meal')}</Fieldset.Legend>
         </Stack>
 
         <Fieldset.Content>
           <Input display={'none'} {...register('vendorName')} value={vendor!.name} />
 
           <Field.Root invalid={Boolean(errors.title)} required>
-            <Field.Label>Title</Field.Label>
+            <Field.Label>{t('title')}</Field.Label>
             <Input {...register('title')} />
             <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root invalid={Boolean(errors.description)} required>
-            <Field.Label>Description</Field.Label>
+            <Field.Label>{t('description')}</Field.Label>
             <Textarea {...register('description')} />
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
           </Field.Root>
 
           <Stack direction={'row'}>
             <Field.Root invalid={Boolean(errors.originalPrice)}>
-              <Field.Label>Original price</Field.Label>
+              <Field.Label>{t('original.price')}</Field.Label>
               <Controller
                 name="originalPrice"
                 control={control}
@@ -126,7 +128,7 @@ export function MealForm({ meal }: MealFormProps) {
             </Field.Root>
 
             <Field.Root invalid={Boolean(errors.price)}>
-              <Field.Label>Price</Field.Label>
+              <Field.Label>{t('price')}</Field.Label>
               <Controller
                 name="price"
                 control={control}
@@ -151,7 +153,7 @@ export function MealForm({ meal }: MealFormProps) {
 
           <HStack>
             <Field.Root invalid={Boolean(errors.quantity)}>
-              <Field.Label>Quantity</Field.Label>
+              <Field.Label>{t('quantity')}</Field.Label>
               <Controller
                 name="quantity"
                 control={control}
@@ -173,7 +175,7 @@ export function MealForm({ meal }: MealFormProps) {
             </Field.Root>
 
             <Field.Root invalid={Boolean(errors.maxOrderQuantity)}>
-              <Field.Label>Max order quantity</Field.Label>
+              <Field.Label>{t('max.order.quantity')}</Field.Label>
               <Controller
                 name="maxOrderQuantity"
                 control={control}
@@ -197,13 +199,13 @@ export function MealForm({ meal }: MealFormProps) {
 
           <HStack>
             <Field.Root invalid={Boolean(errors.firstAvailablePickup)}>
-              <Field.Label>First available pickup</Field.Label>
+              <Field.Label>{t('first.available.pickup')}</Field.Label>
               <Input type="datetime-local" {...register('firstAvailablePickup')} />
               <Field.ErrorText>{errors.firstAvailablePickup?.message}</Field.ErrorText>
             </Field.Root>
 
             <Field.Root invalid={Boolean(errors.lastAvailablePickup)}>
-              <Field.Label>Last available pickup</Field.Label>
+              <Field.Label>{t('last.available.pickup')}</Field.Label>
               <Input type="datetime-local" {...register('lastAvailablePickup')} />
               <Field.ErrorText>{errors.lastAvailablePickup?.message}</Field.ErrorText>
             </Field.Root>
@@ -212,7 +214,7 @@ export function MealForm({ meal }: MealFormProps) {
 
         <HStack>
           <Button size={'sm'} type="submit" alignSelf="flex-start" loading={isLoading}>
-            Submit
+            {t('create')}
           </Button>
           <Button size={'sm'} variant={'outline'}>
             Opret skabelon

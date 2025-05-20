@@ -32,5 +32,9 @@
   "validation.rules.isRequired": "{{attribute}} er påkrævet",
   "validation.rules.invalidType": "Ugyldig type",
   "overview": "Overblik",
-  "create.meal": "Opret måltid"
+  "create.meal": "Opret måltid",
+  "meals": "Måltider",
+  "create": "Opret",
+  "orders": "Ordre",
+  "statistics": "Statestik"
 }

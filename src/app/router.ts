@@ -38,7 +38,6 @@ export const router = createRouter({
   defaultErrorComponent: ({ error }) => ErrorComponent({ error }),
   defaultPreload: 'intent',
   scrollRestoration: true,
-  // defaultNotFoundComponent: NotFound,
   context: {
     auth: undefined! // This will be set after we wrap the app in an AuthProvider
   }

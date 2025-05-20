@@ -18,6 +18,7 @@ import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { useDeleteMealMutation } from '../api/delete-meal'
+import { useTranslation } from 'react-i18next'
 
 const limitList = createListCollection({
   items: [
@@ -28,6 +29,8 @@ const limitList = createListCollection({
 })
 
 export function MealList() {
+  const { t } = useTranslation('meals')
+
   const navigate = useNavigate()
 
   const [remove] = useDeleteMealMutation()
@@ -42,14 +45,14 @@ export function MealList() {
       <Table.Root size="sm">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader>Vendor</Table.ColumnHeader>
-            <Table.ColumnHeader>Title</Table.ColumnHeader>
-            <Table.ColumnHeader>Original Price</Table.ColumnHeader>
-            <Table.ColumnHeader>Price</Table.ColumnHeader>
-            <Table.ColumnHeader>Quantity</Table.ColumnHeader>
-            <Table.ColumnHeader>Max quantity</Table.ColumnHeader>
-            <Table.ColumnHeader>Categories</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="end">Handlinger</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('vendor')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('title')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('original.price')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('price')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('quantity')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('max.order.quantity')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('categories')}</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="end">{t('actions')}</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -74,7 +77,7 @@ export function MealList() {
               <Table.Cell textAlign="end">
                 <Menu.Root positioning={{ placement: 'left-start' }}>
                   <Menu.Trigger asChild>
-                    <IconButton size={'2xs'} variant={'ghost'} aria-label={'more options'}>
+                    <IconButton size={'2xs'} variant={'ghost'} aria-label={t('more.options')}>
                       <BsThreeDotsVertical />
                     </IconButton>
                   </Menu.Trigger>
@@ -92,7 +95,7 @@ export function MealList() {
                             })
                           }
                         >
-                          Edit
+                          {t('edit')}
                         </Menu.Item>
                         <Menu.Separator />
                         <Menu.Item
@@ -101,7 +104,7 @@ export function MealList() {
                           _hover={{ bg: 'bg.error', color: 'fg.error' }}
                           onClick={() => remove(meal.id)}
                         >
-                          <Box flex="1">Delete</Box>
+                          <Box flex="1">{t('delete')}</Box>
                         </Menu.Item>
                       </Menu.Content>
                     </Menu.Positioner>

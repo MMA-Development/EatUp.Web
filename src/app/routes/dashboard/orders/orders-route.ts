@@ -10,13 +10,13 @@ import { OrderScreen } from '@features/orders/components/order-screen.tsx'
 const defaultValues = {
   query: '',
   skip: 0,
-  limit: 10
+  take: 10
 }
 
 const OrdersRouteSearchSchema = z.object({
   query: z.string().optional(),
   skip: z.number().int().min(0).optional().default(defaultValues.skip),
-  limit: z.number().int().min(1).optional().default(defaultValues.limit)
+  take: z.number().int().min(1).optional().default(defaultValues.take)
 })
 
 export const ordersRoute = createRoute({
@@ -31,10 +31,10 @@ export const ordersRoute = createRoute({
   pendingComponent: () => Pending({ message: 'Overblik' }),
   // We separate search params from the loader to ensure caching/preloading works correctly
   // it makes the data uniquely tied to the URL and avoids bugs.
-  loaderDeps: ({ search: { skip, limit, query } }) => ({ skip, limit, query }),
-  loader: async ({ deps: { skip, limit, query } }) => {
+  loaderDeps: ({ search: { skip, take, query } }) => ({ skip, take, query }),
+  loader: async ({ deps: { skip, take, query } }) => {
     const res = await store
-      .dispatch(orders.endpoints.getOrders.initiate({ skip, limit, query }))
+      .dispatch(orders.endpoints.getOrders.initiate({ skip, take, query }))
       .unwrap()
     return {
       data: res.items,

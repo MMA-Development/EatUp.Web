@@ -1,0 +1,21 @@
+{
+  "meal": "Måltid",
+  "search": "Søg",
+  "title": "Titel",
+  "description": "Beskrivelse",
+  "original.price": "Original pris",
+  "price": "Pris",
+  "quantity": "Mængde",
+  "max.order.quantity": "Maks order mængde",
+  "first.available.pickup": "Først mulige afhentningstidspunkt",
+  "last.available.pickup": "Sidst mulige afhentningstidspunkt",
+  "create": "Opret",
+  "vendor": "Forhandler",
+  "categories": "Kategorier",
+  "actions": "Handlinger",
+  "refresh": "Genopfrisk",
+  "refresh.description": "Genopfrisk data",
+  "edit": "Redigere",
+  "delete": "Slet",
+  "more.options": "Flere muligheder"
+}
