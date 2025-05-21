@@ -14,12 +14,12 @@ export interface Auth {
   token: Token | null
 }
 
-export const initialAuthState: Readonly<Auth> = Object.freeze({
+export const initialAuthState: Auth = {
   isAuthenticated: false,
   user: null,
   vendor: null,
   token: null
-})
+}
 
 const authSlice = createSlice({
   name: 'auth',
@@ -41,14 +41,16 @@ const authSlice = createSlice({
       state.vendor = null
       state.isAuthenticated = false
     }
+  },
+  selectors: {
+    selectToken: (state) => state.token,
+    selectUser: (state) => state.user,
+    selectVendor: (state) => state.vendor,
+    selectIsAuthenticated: (state) => state.isAuthenticated
   }
 })
 
 export const { setToken, setUser, logout, setVendor } = authSlice.actions
-
-export const selectToken = (state: RootState) => state.auth.token
-export const selectUser = (state: RootState) => state.auth.user
-export const selectVendor = (state: RootState) => state.auth.vendor
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated
+export const { selectToken, selectUser, selectVendor, selectIsAuthenticated } = authSlice.selectors
 
 export default authSlice.reducer
