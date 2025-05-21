@@ -6,9 +6,6 @@ export function Dashboard() {
     <Flex direction={'column'} gap={4}>
       <SimpleGrid minChildWidth="sm" gap="40px">
         <OrdersTodaySparkline />
-        <OrdersTodaySparkline />
-        <OrdersTodaySparkline />
-        <OrdersTodaySparkline />
       </SimpleGrid>
     </Flex>
   )
