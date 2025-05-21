@@ -14,12 +14,12 @@ export interface Auth {
   token: Token | null
 }
 
-export const initialAuthState: Auth = {
+export const initialAuthState: Readonly<Auth> = Object.freeze({
   isAuthenticated: false,
   user: null,
   vendor: null,
   token: null
-}
+})
 
 const authSlice = createSlice({
   name: 'auth',
