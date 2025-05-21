@@ -2,5 +2,15 @@
   "username": "Brugernavn",
   "password": "Kodeord",
   "login": "Login",
-  "login.details.description": "Angiv venligst dine loginoplysninger nedenfor"
+  "login.details.description": "Angiv venligst dine loginoplysninger nedenfor",
+  "name": "Navn",
+  "email": "Email",
+  "cvr": "CVR",
+  "address": "Adresse",
+  "search": "Søg",
+  "signup": "Opret dig",
+  "signup.description": "Angiv venligst dine kontaktoplysninger nedenfor.",
+  "here": "Her",
+  "already.customer": "Allerede oprettet?"
+
 }

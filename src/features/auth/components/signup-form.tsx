@@ -21,8 +21,10 @@ import { DragEndEvent, LatLngExpression } from 'leaflet'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { useTranslation } from 'react-i18next'
 
 export function SignupForm() {
+  const { t } = useTranslation('auth')
   const { colorMode } = useColorMode()
 
   const {
@@ -93,20 +95,20 @@ export function SignupForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset.Root size="lg" maxW="md">
         <Stack>
-          <Fieldset.Legend>Signup</Fieldset.Legend>
-          <Fieldset.HelperText>Please provide your contact details below.</Fieldset.HelperText>
+          <Fieldset.Legend>{t('signup')}</Fieldset.Legend>
+          <Fieldset.HelperText>{t('signup.description')}</Fieldset.HelperText>
         </Stack>
 
         <Fieldset.Content>
           <Stack direction={'row'}>
             <Field.Root required invalid={Boolean(errors.name)}>
-              <Field.Label>Name</Field.Label>
+              <Field.Label>{t('name')}</Field.Label>
               <Input {...register('name')} />
               <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
             </Field.Root>
 
             <Field.Root required invalid={Boolean(errors.email)}>
-              <Field.Label>Email address</Field.Label>
+              <Field.Label>{t('email')}</Field.Label>
               <Input {...register('email')} />
               <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
             </Field.Root>
@@ -114,31 +116,31 @@ export function SignupForm() {
 
           <Stack direction={'row'}>
             <Field.Root required invalid={Boolean(errors.username)}>
-              <Field.Label>Username</Field.Label>
+              <Field.Label>{t('username')}</Field.Label>
               <Input {...register('username')} />
               <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
             </Field.Root>
 
             <Field.Root required invalid={Boolean(errors.password)}>
-              <Field.Label>Password</Field.Label>
+              <Field.Label>{t('password')}</Field.Label>
               <Input type="password" {...register('password')} />
               <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
             </Field.Root>
           </Stack>
 
           <Field.Root required invalid={Boolean(errors.cvr)}>
-            <Field.Label>CVR</Field.Label>
+            <Field.Label>{t('cvr')}</Field.Label>
             <Input {...register('cvr')} />
             <Field.ErrorText>{errors.cvr?.message}</Field.ErrorText>
           </Field.Root>
 
           <HStack>
             <Field.Root>
-              <Field.Label>Address</Field.Label>
+              <Field.Label>{t('address')}</Field.Label>
               <Input onChange={(e) => setAddress(e.target.value)} value={address} />
             </Field.Root>
             <Button alignSelf={'end'} onClick={() => lookup(address)}>
-              Søg
+              {t('search')}
             </Button>
           </HStack>
 
@@ -178,13 +180,13 @@ export function SignupForm() {
 
         <HStack>
           <Button loading={isLoading} type="submit" alignSelf="flex-start">
-            Opret dig
+            {t('signup')}
           </Button>
           <Separator orientation="vertical" h={8} />
           <Text>
-            Allerede oprettet? Log ind{' '}
+            {t('already.customer')} {t('login')}{' '}
             <CustomLink colorPalette={'blue'} to={'/auth/login'}>
-              her.
+              {t('here').toLowerCase()}.
             </CustomLink>
           </Text>
         </HStack>
