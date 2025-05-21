@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '@store/types.ts'
 import { Vendor } from '@features/auth/types'
 
 interface Token {
@@ -36,10 +35,7 @@ const authSlice = createSlice({
       state.vendor = action.payload
     },
     logout(state) {
-      state.token = null
-      state.user = null
-      state.vendor = null
-      state.isAuthenticated = false
+      Object.assign(state, initialAuthState)
     }
   },
   selectors: {

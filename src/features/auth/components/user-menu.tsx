@@ -1,17 +1,26 @@
 import { useAppDispatch, useAppSelector } from '@store/hooks.ts'
-import { logout, selectUser } from '@features/auth/store'
+import { logout, selectToken, selectUser } from '@features/auth/store'
 import { Avatar, Button, Menu, Portal, useBreakpointValue } from '@chakra-ui/react'
 import { useNavigate } from '@tanstack/react-router'
+import { useSignoutMutation } from '@features/auth/api/signout.ts'
 
 export function UserMenu() {
   const user = useAppSelector(selectUser)
+  const token = useAppSelector(selectToken)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const [signout] = useSignoutMutation()
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
   async function handleLogout() {
-    dispatch(logout())
+    if (!token) {
+      dispatch(logout())
+    } else {
+      signout(token.refreshToken)
+      dispatch(logout())
+    }
     await navigate({ to: '/auth/login' })
   }
 
