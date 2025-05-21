@@ -9,9 +9,19 @@ import {
 export const meals = eatupApi.injectEndpoints({
   endpoints: (builder) => ({
     getMeals: builder.query<PaginatedResponse<Meal>, ApiPaginationWithSearch | void>({
-      query: (pagination) => ({
-        url: `/meals/vendor?skip=${pagination?.skip}&take=${pagination?.take}${pagination && pagination.query ? `&search=${pagination.query}` : ''}`
-      }),
+      query: (pagination) => {
+        const { skip, take, query, categories } = pagination || {}
+
+        const categoryParams =
+          categories?.map((cat) => `categories=${encodeURIComponent(cat)}`).join('&') || ''
+
+        const searchParam = query ? `&search=${encodeURIComponent(query)}` : ''
+        const categoryQuery = categoryParams ? `&${categoryParams}` : ''
+
+        return {
+          url: `/meals/vendor?skip=${skip}&take=${take}${searchParam}${categoryQuery}`
+        }
+      },
       extraOptions: {
         dataSchema: PaginatedResponseSchema(MealSchema)
       }

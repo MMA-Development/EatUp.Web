@@ -7,6 +7,7 @@ export interface ApiPagination {
 
 export interface ApiPaginationWithSearch extends ApiPagination {
   query?: string
+  categories?: string[]
 }
 
 export interface PaginatedResponse<T> {
