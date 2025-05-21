@@ -39,6 +39,7 @@ const authSlice = createSlice({
     }
   },
   selectors: {
+    selectAuth: (state) => state,
     selectToken: (state) => state.token,
     selectUser: (state) => state.user,
     selectVendor: (state) => state.vendor,
@@ -47,6 +48,7 @@ const authSlice = createSlice({
 })
 
 export const { setToken, setUser, logout, setVendor } = authSlice.actions
-export const { selectToken, selectUser, selectVendor, selectIsAuthenticated } = authSlice.selectors
+export const { selectToken, selectUser, selectVendor, selectIsAuthenticated, selectAuth } =
+  authSlice.selectors
 
 export default authSlice.reducer
