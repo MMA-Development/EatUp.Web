@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <script
-    crossOrigin="anonymous"
-    src="//unpkg.com/react-scan/dist/auto.global.js"
-  ></script>
+  <script>
+    if (window.location.hostname.includes('localhost')) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/react-scan/dist/auto.global.js';
+      document.head.appendChild(script);
+    }
+  </script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
