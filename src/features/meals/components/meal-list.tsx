@@ -36,7 +36,7 @@ export function MealList() {
   const [remove] = useDeleteMealMutation()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
-  const { take } = useSearch({ from: '/dashboard/meals' })
+  const { take, skip } = useSearch({ from: '/dashboard/meals' })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -128,7 +128,7 @@ export function MealList() {
         }
         count={totalCount}
         pageSize={take}
-        defaultPage={1}
+        defaultPage={skip / take + 1}
       >
         <HStack>
           <ButtonGroup variant="ghost" size="sm" w={'100%'}>

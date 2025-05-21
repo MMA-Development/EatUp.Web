@@ -35,7 +35,7 @@ export function OrderList() {
   } = useTranslation()
 
   const { data, totalCount } = useLoaderData({ from: '/dashboard/orders' })
-  const { take } = useSearch({ from: '/dashboard/orders' })
+  const { take, skip } = useSearch({ from: '/dashboard/orders' })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -101,7 +101,7 @@ export function OrderList() {
         }
         count={totalCount}
         pageSize={take}
-        defaultPage={1}
+        defaultPage={skip / take + 1}
       >
         <HStack>
           <ButtonGroup variant="ghost" size="sm" w={'100%'}>
