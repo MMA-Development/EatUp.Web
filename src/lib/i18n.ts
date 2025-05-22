@@ -1,5 +1,6 @@
 import daAuth from '@features/auth/locale/da.json'
 import daMeals from '@features/meals/locale/da.json'
+import enMeals from '@features/meals/locale/en.json'
 import daOrders from '@features/orders/locale/da.json'
 import enOrders from '@features/orders/locale/en.json'
 import enAuth from '@features/auth/locale/en.json'
@@ -25,6 +26,7 @@ await i18next
       en: {
         common: enCommon,
         auth: enAuth,
+        meals: enMeals,
         orders: enOrders,
         zod: enZod
       },

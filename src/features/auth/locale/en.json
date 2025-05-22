@@ -2,5 +2,14 @@
   "username": "Username",
   "password": "Password",
   "login": "Login",
-  "login.details.description": "Please provide your login details below."
+  "login.details.description": "Please enter your login details below",
+  "name": "Name",
+  "email": "Email",
+  "cvr": "CVR",
+  "address": "Address",
+  "search": "Search",
+  "signup": "Sign up",
+  "signup.description": "Please enter your contact details below.",
+  "here": "Here",
+  "already.customer": "Already registered?"
 }

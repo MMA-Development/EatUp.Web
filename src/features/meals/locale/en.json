@@ -1,0 +1,21 @@
+{
+  "meal": "Meal",
+  "search": "Search",
+  "title": "Title",
+  "description": "Description",
+  "original.price": "Original price",
+  "price": "Price",
+  "quantity": "Quantity",
+  "max.order.quantity": "Max order quantity",
+  "first.available.pickup": "Earliest pickup time",
+  "last.available.pickup": "Latest pickup time",
+  "create": "Create",
+  "vendor": "Vendor",
+  "categories": "Categories",
+  "actions": "Actions",
+  "refresh": "Refresh",
+  "refresh.description": "Refresh data",
+  "edit": "Edit",
+  "delete": "Delete",
+  "more.options": "More options"
+}
