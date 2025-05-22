@@ -101,6 +101,7 @@ export function OrderList() {
         }
         count={totalCount}
         pageSize={take}
+        page={skip / take + 1}
         defaultPage={skip / take + 1}
       >
         <HStack>

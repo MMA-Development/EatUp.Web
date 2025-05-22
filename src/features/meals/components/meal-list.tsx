@@ -128,6 +128,7 @@ export function MealList() {
         }
         count={totalCount}
         pageSize={take}
+        page={skip / take + 1}
         defaultPage={skip / take + 1}
       >
         <HStack>
