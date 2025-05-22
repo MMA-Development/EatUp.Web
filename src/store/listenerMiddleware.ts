@@ -1,8 +1,8 @@
-import { setupAuthListeners } from '@features/auth/middleware/auth-middleware.ts'
+import { setupOnSignin } from '@features/auth/listeners/on-signin.ts'
 import { addListener, createListenerMiddleware } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from './types'
 import { setupMealsListener } from '@features/meals/listeners/meal-listener.ts'
-import { setupProfileUpdateListener } from '@features/auth/middleware/profile-update.ts'
+import { setupOnProfileUpdated } from '@features/auth/listeners/on-profile-update.ts'
 
 declare type ExtraArgument = object
 
@@ -17,6 +17,6 @@ export const startAppListening = listenerMiddleware.startListening.withTypes<
 export const addAppListener = addListener.withTypes<RootState, AppDispatch>()
 
 // setup middlewares
-setupAuthListeners()
+setupOnSignin()
 setupMealsListener()
-setupProfileUpdateListener()
+setupOnProfileUpdated()

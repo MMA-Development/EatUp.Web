@@ -20,7 +20,7 @@ import { startAppListening } from '@store/listenerMiddleware.ts'
  *
  * @return {void} This function does not return any value.
  */
-export function setupAuthListeners(): void {
+export function setupOnSignin(): void {
   startAppListening({
     matcher: authenticate.endpoints.authenticate.matchFulfilled,
     effect: async (action, listenerApi) => {
