@@ -63,13 +63,14 @@ export const baseQueryWithValidation: BaseQueryFn<
   if (result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
+      const refreshToken = (api.getState() as RootState).auth.token?.refreshToken
       try {
         // try to get a new token
         const refreshResult = await baseQuery(
           {
             url: '/vendors/token',
             method: 'POST',
-            body: `"${(api.getState() as RootState).auth.token?.refreshToken}"`
+            body: `"${refreshToken}"`
           },
           api,
           extraOptions
