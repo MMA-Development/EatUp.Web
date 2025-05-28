@@ -17,5 +17,6 @@
   "refresh.description": "Genopfrisk data",
   "edit": "Redigere",
   "delete": "Slet",
-  "more.options": "Flere muligheder"
+  "more.options": "Flere muligheder",
+  "select.category": "Vælg kategori"
 }

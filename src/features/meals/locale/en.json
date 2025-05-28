@@ -17,5 +17,6 @@
   "refresh.description": "Refresh data",
   "edit": "Edit",
   "delete": "Delete",
-  "more.options": "More options"
+  "more.options": "More options",
+  "select.category": "Choose a category"
 }
