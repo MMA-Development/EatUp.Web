@@ -1,11 +1,11 @@
 export const colorPalettes = [
   'gray',
   'red',
-  'pink',
   'purple',
+  'pink',
   'cyan',
-  'blue',
   'teal',
+  'blue',
   'green',
   'yellow',
   'orange'

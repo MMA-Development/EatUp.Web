@@ -18,8 +18,8 @@ export function MealScreen() {
 
   const inputRef = useInputFocusHotkey()
 
-  const { query, skip, take } = useSearch({ from: '/dashboard/meals' })
-  const { refetch, isFetching } = useGetMealsQuery({ skip, take, query })
+  const { query, skip, take, categories } = useSearch({ from: '/dashboard/meals' })
+  const { refetch, isFetching } = useGetMealsQuery({ skip, take, query, categories })
 
   const [searchValue, setSearchValue] = useDebouncedState(query, 300)
 
@@ -37,6 +37,7 @@ export function MealScreen() {
     <Flex direction={'column'}>
       <HStack>
         <CategoriesSelector
+          value={categories}
           onValueChange={async ({ value }) => {
             await navigate({
               to: '/dashboard/meals',
