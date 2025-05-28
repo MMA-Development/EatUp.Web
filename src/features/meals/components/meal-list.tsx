@@ -19,6 +19,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { useDeleteMealMutation } from '../api/delete-meal'
 import { useTranslation } from 'react-i18next'
+import { getRandomColor } from '@utils/color.ts'
 
 const limitList = createListCollection({
   items: [
@@ -67,7 +68,11 @@ export function MealList() {
               <Table.Cell>
                 <HStack gap={2}>
                   {meal.categories.map((category) => (
-                    <Badge variant="solid" colorPalette="blue">
+                    <Badge
+                      variant="solid"
+                      colorPalette={getRandomColor(category.name)}
+                      key={category.id}
+                    >
                       {category.name}
                     </Badge>
                   ))}
