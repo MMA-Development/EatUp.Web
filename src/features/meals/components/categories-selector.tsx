@@ -18,7 +18,7 @@ export function CategoriesSelector({ ...props }: Omit<Select.RootProps<Category>
   }, [data])
 
   return (
-    <Select.Root {...props} collection={collection} multiple size="sm" width="320px">
+    <Select.Root {...props} collection={collection} multiple>
       <Select.HiddenSelect />
       <Select.Control>
         <Select.Trigger>

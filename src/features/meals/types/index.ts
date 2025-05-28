@@ -36,6 +36,7 @@ export const MealPayloadSchema = z
     description: z.string(),
     quantity: z.number().min(1),
     categories: z.array(z.string().uuid()),
+    imageUrl: z.string().optional(),
     maxOrderQuantity: z.number().min(1),
     firstAvailablePickup: z
       .string()

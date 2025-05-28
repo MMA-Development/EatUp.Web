@@ -37,6 +37,8 @@ export function MealScreen() {
     <Flex direction={'column'}>
       <HStack>
         <CategoriesSelector
+          size={'sm'}
+          maxW={'xs'}
           value={categories}
           onValueChange={async ({ value }) => {
             await navigate({

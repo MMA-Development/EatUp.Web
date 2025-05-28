@@ -2,6 +2,7 @@ import {
   Button,
   Field,
   Fieldset,
+  FileUpload,
   HStack,
   Input,
   NumberInput,
@@ -14,13 +15,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { useUpdateMealMutation } from '@features/meals/api/update-meal.ts'
 import { toaster } from '@components/ui/toaster.tsx'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import moment from 'moment'
 import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { useAppSelector } from '@store/hooks.ts'
 import { selectVendor } from '@features/auth/store'
 import { useTranslation } from 'react-i18next'
 import { CategoriesSelector } from '@features/meals/components/categories-selector.tsx'
+import { HiUpload } from 'react-icons/hi'
 
 interface MealFormProps {
   meal?: Meal
@@ -28,6 +30,8 @@ interface MealFormProps {
 
 export function MealForm({ meal }: MealFormProps) {
   const { t } = useTranslation('meals')
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const [addMeal, { isLoading: isAdding }] = useAddMealMutation()
   const [updateMeal, { isLoading: isUpdating }] = useUpdateMealMutation()
@@ -64,11 +68,40 @@ export function MealForm({ meal }: MealFormProps) {
 
   async function onSubmit(data: MealPayload) {
     try {
-      if (isEditing) {
-        await updateMeal({ id: meal.id, meal: data }).unwrap()
-      } else {
-        await addMeal(data).unwrap()
+      let fileUrl = data.imageUrl ?? ''
+
+      if (selectedFile) {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+
+        const response = await fetch('https://dev-eatup-api.mma-development.dk/Files/meal', {
+          method: 'POST',
+          body: formData
+        })
+
+        if (!response.ok) {
+          new Error('Failed to upload image')
+        }
+
+        const result = await response.json()
+        fileUrl = result.fileurl
       }
+
+      const mealDataWithImage = {
+        ...data,
+        imageUrl: fileUrl
+      }
+
+      if (isEditing) {
+        await updateMeal({ id: meal.id, meal: mealDataWithImage }).unwrap()
+      } else {
+        await addMeal(mealDataWithImage).unwrap()
+      }
+
+      toaster.create({
+        title: isEditing ? 'Meal updated' : 'Meal created',
+        type: 'success'
+      })
     } catch (e) {
       console.error(e)
       toaster.create({
@@ -78,6 +111,7 @@ export function MealForm({ meal }: MealFormProps) {
     } finally {
       reset()
       refetchMeals({ take: 10, skip: 0 })
+      setSelectedFile(null)
     }
   }
 
@@ -105,7 +139,6 @@ export function MealForm({ meal }: MealFormProps) {
 
           <Field.Root>
             <Field.Label>{t('categories')}</Field.Label>
-
             <Controller
               name="categories"
               control={control}
@@ -118,10 +151,32 @@ export function MealForm({ meal }: MealFormProps) {
                 />
               )}
             />
-
             <Field.ErrorText></Field.ErrorText>
             <Field.HelperText>Giv din måltidspakke en ellere flere kategorier</Field.HelperText>
           </Field.Root>
+
+          <FileUpload.Root
+            accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+            maxFiles={1}
+            onFileChange={(details) => {
+              const file = details.acceptedFiles[0]
+              if (file) {
+                setSelectedFile(file)
+              }
+            }}
+          >
+            <HStack w={'100%'}>
+              <FileUpload.HiddenInput />
+              <FileUpload.Trigger asChild>
+                <Button variant="outline">
+                  <HiUpload /> Upload file
+                </Button>
+              </FileUpload.Trigger>
+              <FileUpload.ItemGroup>
+                <FileUpload.Items p={2} h={'40px'} borderRadius={'md'} />
+              </FileUpload.ItemGroup>
+            </HStack>
+          </FileUpload.Root>
 
           <Stack direction={'row'}>
             <Field.Root invalid={Boolean(errors.originalPrice)}>
