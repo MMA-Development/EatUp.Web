@@ -46,7 +46,6 @@ export function MealList() {
       <Table.Root size="sm">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader>{t('vendor')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('title')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('original.price')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('price')}</Table.ColumnHeader>
@@ -59,10 +58,9 @@ export function MealList() {
         <Table.Body>
           {data.map((meal, index) => (
             <Table.Row key={index}>
-              <Table.Cell>{meal.vendorName}</Table.Cell>
               <Table.Cell>{meal.title}</Table.Cell>
-              <Table.Cell>{meal.originalPrice}</Table.Cell>
-              <Table.Cell>{meal.price}</Table.Cell>
+              <Table.Cell>{meal.originalPrice} kr.</Table.Cell>
+              <Table.Cell>{meal.price} kr.</Table.Cell>
               <Table.Cell>{meal.quantity}</Table.Cell>
               <Table.Cell>{meal.maxOrderQuantity}</Table.Cell>
               <Table.Cell>

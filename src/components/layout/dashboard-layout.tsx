@@ -221,7 +221,8 @@ export function DashboardLayout() {
             </Accordion.Item>
           </Accordion.Root>
         </Stack>
-        <Stack position={'absolute'} bottom={12} mt={'auto'}>
+        <Stack bottom={12} mt={'auto'}>
+          <Separator />
           <UserMenu />
         </Stack>
       </Box>
