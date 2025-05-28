@@ -66,12 +66,11 @@ export function MealList() {
               <Table.Cell>{meal.maxOrderQuantity}</Table.Cell>
               <Table.Cell>
                 <HStack gap={2}>
-                  <Badge variant="solid" colorPalette="blue">
-                    Meat
-                  </Badge>
-                  <Badge variant="solid" colorPalette="green">
-                    Dinner
-                  </Badge>
+                  {meal.categories.map((category) => (
+                    <Badge variant="solid" colorPalette="blue">
+                      {category.name}
+                    </Badge>
+                  ))}
                 </HStack>
               </Table.Cell>
               <Table.Cell textAlign="end">

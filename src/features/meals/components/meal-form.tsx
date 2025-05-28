@@ -20,6 +20,7 @@ import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { useAppSelector } from '@store/hooks.ts'
 import { selectVendor } from '@features/auth/store'
 import { useTranslation } from 'react-i18next'
+import { CategoriesSelector } from '@features/meals/components/categories-selector.tsx'
 
 interface MealFormProps {
   meal?: Meal
@@ -41,6 +42,7 @@ export function MealForm({ meal }: MealFormProps) {
     if (!meal) return undefined
     return {
       ...meal,
+      categories: meal.categories.map((c) => c.id),
       firstAvailablePickup: moment
         .utc(meal.firstAvailablePickup)
         .local()
@@ -99,6 +101,26 @@ export function MealForm({ meal }: MealFormProps) {
             <Field.Label>{t('description')}</Field.Label>
             <Textarea {...register('description')} />
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root>
+            <Field.Label>{t('categories')}</Field.Label>
+
+            <Controller
+              name="categories"
+              control={control}
+              render={({ field }) => (
+                <CategoriesSelector
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={({ value }) => field.onChange(value)}
+                  onInteractOutside={() => field.onBlur()}
+                />
+              )}
+            />
+
+            <Field.ErrorText></Field.ErrorText>
+            <Field.HelperText>Giv din måltidspakke en ellere flere kategorier</Field.HelperText>
           </Field.Root>
 
           <Stack direction={'row'}>
