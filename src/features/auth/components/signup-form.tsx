@@ -2,6 +2,7 @@ import {
   Button,
   Field,
   Fieldset,
+  FileUpload,
   Flex,
   HStack,
   Input,
@@ -22,6 +23,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { useTranslation } from 'react-i18next'
+import { HiUpload } from 'react-icons/hi'
 
 export function SignupForm() {
   const { t } = useTranslation('auth')
@@ -37,10 +39,12 @@ export function SignupForm() {
   })
 
   const [signup, { isLoading, isError }] = useSignupMutation()
-  const [lookup, { data }] = useLazyForwardGeocodeQuery()
+  const [lookup, { data, isLoading: isLoadingLookup }] = useLazyForwardGeocodeQuery()
   const [checkPOI] = usePoiMutation()
 
   const defaultPosition = [55.3997225, 10.3852104] satisfies LatLngExpression
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const [address, setAddress] = useState<string>('')
   const [markerPos, setMarkerPos] = useState<LatLngExpression>(defaultPosition)
@@ -71,9 +75,7 @@ export function SignupForm() {
         radius: 50
       }).unwrap()
 
-      console.log(poiRes)
       const found = poiRes?.elements.length > 0
-      console.log(found)
 
       if (!found) {
         const confirmLocation = confirm(
@@ -84,7 +86,31 @@ export function SignupForm() {
         }
       }
 
-      const res = await signup(data).unwrap()
+      let fileUrl = data.logo ?? ''
+
+      if (selectedFile) {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+
+        const response = await fetch('https://dev-eatup-api.mma-development.dk/Files/logo', {
+          method: 'POST',
+          body: formData
+        })
+
+        if (!response.ok) {
+          new Error('Failed to upload image')
+        }
+
+        const result = await response.json()
+        fileUrl = result.fileurl
+      }
+
+      const dataWithLogo = {
+        ...data,
+        logo: fileUrl
+      }
+
+      const res = await signup(dataWithLogo).unwrap()
       window.open(res.url)
     } catch (e) {
       console.error(e)
@@ -134,12 +160,43 @@ export function SignupForm() {
             <Field.ErrorText>{errors.cvr?.message}</Field.ErrorText>
           </Field.Root>
 
+          <Field.Root>
+            <Field.Label>{t('logo')}</Field.Label>
+            <FileUpload.Root
+              accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+              maxFiles={1}
+              onFileChange={(details) => {
+                const file = details.acceptedFiles[0]
+                if (file) {
+                  setSelectedFile(file)
+                }
+              }}
+            >
+              <HStack w={'100%'}>
+                <FileUpload.HiddenInput />
+                <FileUpload.Trigger asChild>
+                  <Button variant="outline">
+                    <HiUpload /> Upload file
+                  </Button>
+                </FileUpload.Trigger>
+                <FileUpload.ItemGroup>
+                  <FileUpload.Items p={2} h={'40px'} borderRadius={'md'} />
+                </FileUpload.ItemGroup>
+              </HStack>
+            </FileUpload.Root>
+          </Field.Root>
+
           <HStack>
             <Field.Root>
               <Field.Label>{t('address')}</Field.Label>
               <Input onChange={(e) => setAddress(e.target.value)} value={address} />
             </Field.Root>
-            <Button alignSelf={'end'} onClick={() => lookup(address)}>
+            <Button
+              loading={isLoadingLookup}
+              loadingText={t('searching')}
+              alignSelf={'end'}
+              onClick={() => lookup(address)}
+            >
               {t('search')}
             </Button>
           </HStack>

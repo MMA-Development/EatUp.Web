@@ -17,6 +17,7 @@ export const SignupPayloadSchema = z.object({
   password: z.string().min(4),
   username: z.string().min(4),
   cvr: z.string(),
+  logo: z.string().optional(),
   email: z.string().email(),
   longitude: z.number(),
   latitude: z.number()
