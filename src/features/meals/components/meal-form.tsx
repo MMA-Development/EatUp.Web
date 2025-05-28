@@ -155,28 +155,31 @@ export function MealForm({ meal }: MealFormProps) {
             <Field.HelperText>Giv din måltidspakke en ellere flere kategorier</Field.HelperText>
           </Field.Root>
 
-          <FileUpload.Root
-            accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
-            maxFiles={1}
-            onFileChange={(details) => {
-              const file = details.acceptedFiles[0]
-              if (file) {
-                setSelectedFile(file)
-              }
-            }}
-          >
-            <HStack w={'100%'}>
-              <FileUpload.HiddenInput />
-              <FileUpload.Trigger asChild>
-                <Button variant="outline">
-                  <HiUpload /> Upload file
-                </Button>
-              </FileUpload.Trigger>
-              <FileUpload.ItemGroup>
-                <FileUpload.Items p={2} h={'40px'} borderRadius={'md'} />
-              </FileUpload.ItemGroup>
-            </HStack>
-          </FileUpload.Root>
+          <Field.Root>
+            <Field.Label>{t('image')}</Field.Label>
+            <FileUpload.Root
+              accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+              maxFiles={1}
+              onFileChange={(details) => {
+                const file = details.acceptedFiles[0]
+                if (file) {
+                  setSelectedFile(file)
+                }
+              }}
+            >
+              <HStack w={'100%'}>
+                <FileUpload.HiddenInput />
+                <FileUpload.Trigger asChild>
+                  <Button variant="outline">
+                    <HiUpload /> Upload file
+                  </Button>
+                </FileUpload.Trigger>
+                <FileUpload.ItemGroup>
+                  <FileUpload.Items p={2} h={'40px'} borderRadius={'md'} />
+                </FileUpload.ItemGroup>
+              </HStack>
+            </FileUpload.Root>
+          </Field.Root>
 
           <Stack direction={'row'}>
             <Field.Root invalid={Boolean(errors.originalPrice)}>
