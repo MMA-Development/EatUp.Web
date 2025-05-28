@@ -26,6 +26,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuLayoutDashboard, LuPackage, LuSalad } from 'react-icons/lu'
+import { buildAddressFromNominatim } from '@features/auth/utils/address.ts'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -95,7 +96,7 @@ export function DashboardLayout() {
               </Text>
               {address && address.address && (
                 <Text textStyle={'xs'} color={'fg.muted'}>
-                  {address.address.road} {address.address.house_number}, {address.address.village}
+                  {buildAddressFromNominatim({ address: address.address })}
                 </Text>
               )}
             </Stack>

@@ -9,10 +9,13 @@ import { RecenterAutomatically } from '@features/map/components/recenter.tsx'
 import { DragEndEvent, LatLngExpression } from 'leaflet'
 import { useColorMode } from '@components/ui/color-mode.tsx'
 import { useEffect, useState } from 'react'
+import { reverseGeocode } from '@features/map/api/reverse-geocode.ts'
+import { useAppDispatch } from '@store/hooks.ts'
 
 export function ProfileScreen() {
-  const { colorMode } = useColorMode()
+  const dispatch = useAppDispatch()
 
+  const { colorMode } = useColorMode()
   const { data } = useLoaderData({ from: '/dashboard/profile' })
 
   const [update, { isLoading }] = useUpdateProfileMutation()
@@ -29,6 +32,17 @@ export function ProfileScreen() {
 
   function onSubmit(data: Profile) {
     update(data)
+    dispatch(
+      reverseGeocode.endpoints.reverseGeocode.initiate(
+        {
+          lat: data.latitude.toString(),
+          lon: data.longitude.toString()
+        },
+        {
+          forceRefetch: true
+        }
+      )
+    )
   }
 
   const defaultPosition = [data.latitude, data.longitude] satisfies LatLngExpression
