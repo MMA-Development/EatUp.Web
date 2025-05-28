@@ -12,12 +12,13 @@ import {
   Table,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import moment from 'moment'
 import { Tooltip } from '@components/ui/tooltip.tsx'
 import { useTranslation } from 'react-i18next'
 import { CustomLink } from '@components/ui/custom-link.tsx'
+import { useGetOrdersQuery } from '@features/orders/api/get-orders.ts'
 
 const limitList = createListCollection({
   items: [
@@ -34,8 +35,8 @@ export function OrderList() {
     i18n: { language }
   } = useTranslation()
 
-  const { data, totalCount } = useLoaderData({ from: '/dashboard/orders' })
-  const { take, skip } = useSearch({ from: '/dashboard/orders' })
+  const { take, skip, query } = useSearch({ from: '/dashboard/orders' })
+  const { data: orders } = useGetOrdersQuery({ skip, take, query })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -54,7 +55,7 @@ export function OrderList() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map((order, index) => (
+          {orders?.items.map((order, index) => (
             <Table.Row key={index}>
               <Table.Cell cursor="help">
                 <Tooltip interactive={true} content={order.id}>
@@ -99,7 +100,7 @@ export function OrderList() {
             replace: true
           })
         }
-        count={totalCount}
+        count={orders?.totalCount}
         pageSize={take}
         page={skip / take + 1}
         defaultPage={skip / take + 1}
