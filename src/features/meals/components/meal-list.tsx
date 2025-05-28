@@ -14,12 +14,13 @@ import {
   Table,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { useDeleteMealMutation } from '../api/delete-meal'
 import { useTranslation } from 'react-i18next'
 import { getRandomColor } from '@utils/color.ts'
+import { useGetMealsQuery } from '@features/meals/api/get-meals.ts'
 
 const limitList = createListCollection({
   items: [
@@ -36,8 +37,8 @@ export function MealList() {
 
   const [remove] = useDeleteMealMutation()
 
-  const { data, totalCount } = useLoaderData({ from: '/dashboard/meals' })
-  const { take, skip } = useSearch({ from: '/dashboard/meals' })
+  const { take, skip, query, categories } = useSearch({ from: '/dashboard/meals' })
+  const { data } = useGetMealsQuery({ skip, take, query, categories })
 
   const mobile = useBreakpointValue({ base: true, md: false })
 
@@ -50,18 +51,20 @@ export function MealList() {
             <Table.ColumnHeader>{t('original.price')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('price')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('quantity')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('available')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('max.order.quantity')}</Table.ColumnHeader>
             <Table.ColumnHeader>{t('categories')}</Table.ColumnHeader>
             <Table.ColumnHeader textAlign="end">{t('actions')}</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map((meal, index) => (
+          {data?.items.map((meal, index) => (
             <Table.Row key={index}>
               <Table.Cell>{meal.title}</Table.Cell>
               <Table.Cell>{meal.originalPrice} kr.</Table.Cell>
               <Table.Cell>{meal.price} kr.</Table.Cell>
               <Table.Cell>{meal.quantity}</Table.Cell>
+              <Table.Cell>{meal.available}</Table.Cell>
               <Table.Cell>{meal.maxOrderQuantity}</Table.Cell>
               <Table.Cell>
                 <HStack gap={2}>
@@ -128,7 +131,7 @@ export function MealList() {
             replace: true
           })
         }
-        count={totalCount}
+        count={data?.totalCount}
         pageSize={take}
         page={skip / take + 1}
         defaultPage={skip / take + 1}

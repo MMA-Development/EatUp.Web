@@ -3,6 +3,7 @@ import { PaginatedResponseSchema } from '../../../types/api-types.ts'
 
 export const MealSchema = z.object({
   id: z.string(),
+  available: z.number(),
   vendorId: z.string(),
   vendorName: z.string(),
   title: z.string(),

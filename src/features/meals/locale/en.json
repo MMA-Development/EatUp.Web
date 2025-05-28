@@ -19,5 +19,6 @@
   "delete": "Delete",
   "more.options": "More options",
   "select.category": "Choose a category",
-  "image": "Billede"
+  "image": "Image",
+  "available": "Available"
 }
