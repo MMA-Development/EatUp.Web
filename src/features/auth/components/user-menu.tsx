@@ -3,8 +3,11 @@ import { logout, selectToken, selectUser } from '@features/auth/store'
 import { Avatar, Button, Menu, Portal, useBreakpointValue } from '@chakra-ui/react'
 import { useNavigate } from '@tanstack/react-router'
 import { useSignoutMutation } from '@features/auth/api/signout.ts'
+import { useTranslation } from 'react-i18next'
 
 export function UserMenu() {
+  const { t } = useTranslation('auth')
+
   const user = useAppSelector(selectUser)
   const token = useAppSelector(selectToken)
   const dispatch = useAppDispatch()
@@ -45,7 +48,7 @@ export function UserMenu() {
               value="profile"
               onClick={() => navigate({ to: '/dashboard/profile' })}
             >
-              Profile
+              {t('profile')}
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item
@@ -55,7 +58,7 @@ export function UserMenu() {
               _hover={{ bg: 'bg.error', color: 'fg.error' }}
               onClick={handleLogout}
             >
-              Logout
+              {t('logout')}
             </Menu.Item>
           </Menu.Content>
         </Menu.Positioner>

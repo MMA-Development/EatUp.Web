@@ -11,6 +11,8 @@
   "signup": "Opret dig",
   "signup.description": "Angiv venligst dine kontaktoplysninger nedenfor.",
   "here": "Her",
-  "already.customer": "Allerede oprettet?"
+  "already.customer": "Allerede oprettet?",
+  "logout": "Log ud",
+  "profile": "Profil"
 
 }

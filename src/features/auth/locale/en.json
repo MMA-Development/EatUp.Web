@@ -11,5 +11,7 @@
   "signup": "Sign up",
   "signup.description": "Please enter your contact details below.",
   "here": "Here",
-  "already.customer": "Already registered?"
+  "already.customer": "Already registered?",
+  "logout": "Logout",
+  "profile": "Profile"
 }
