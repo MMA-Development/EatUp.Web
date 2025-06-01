@@ -18,6 +18,7 @@ import { LanguageSelector } from '@components/ui/language-selector.tsx'
 import { Tooltip } from '@components/ui/tooltip.tsx'
 import { UserMenu } from '@features/auth/components/user-menu.tsx'
 import { selectVendor } from '@features/auth/store'
+import { buildAddressFromNominatim } from '@features/auth/utils/address.ts'
 import { useReverseGeocodeQuery } from '@features/map/api/reverse-geocode.ts'
 import { LocalStorage, useLocalStorage } from '@hooks/use-local-storage.ts'
 import { useAppSelector } from '@store/hooks.ts'
@@ -26,7 +27,6 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSidebar } from 'react-icons/fi'
 import { LuFactory, LuLayoutDashboard, LuPackage, LuSalad } from 'react-icons/lu'
-import { buildAddressFromNominatim } from '@features/auth/utils/address.ts'
 
 export function DashboardLayout() {
   const navigate = useNavigate()
@@ -163,7 +163,7 @@ export function DashboardLayout() {
                         size={'sm'}
                         variant={route.fullPath === location.pathname ? 'subtle' : 'ghost'}
                         justifyContent={'flex-start'}
-                        onClick={() => navigate({ to: route.fullPath })}
+                        onClick={() => navigate({ to: route.fullPath.replace(/\/$/, '') })}
                       >
                         {route.options.staticData?.name ? t(route.options.staticData.name) : ''}
                       </Button>
@@ -210,7 +210,7 @@ export function DashboardLayout() {
                         size={'sm'}
                         variant={route.fullPath === location.pathname ? 'subtle' : 'ghost'}
                         justifyContent={'flex-start'}
-                        onClick={() => navigate({ to: route.fullPath })}
+                        onClick={() => navigate({ to: route.fullPath.replace(/\/$/, '') })}
                       >
                         {route.options.staticData?.name ? t(route.options.staticData.name) : ''}
                       </Button>
