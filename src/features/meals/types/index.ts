@@ -81,11 +81,7 @@ export type MealPayload = z.input<typeof MealPayloadSchema>
 
 export const CategorySchema = z.object({
   name: z.string(),
-  meals: z.array(MealSchema),
-  id: z.string().uuid(),
-  deletedAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string()
+  id: z.string().uuid()
 })
 
 export type Category = z.infer<typeof CategorySchema>

@@ -9,19 +9,19 @@ import {
   Stack,
   Textarea
 } from '@chakra-ui/react'
+import { toaster } from '@components/ui/toaster.tsx'
+import { selectVendor } from '@features/auth/store'
 import { useAddMealMutation } from '@features/meals/api/add-meal.ts'
+import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
+import { useUpdateMealMutation } from '@features/meals/api/update-meal.ts'
+import { CategoriesSelector } from '@features/meals/components/categories-selector.tsx'
 import { Meal, MealPayload, MealPayloadSchema } from '@features/meals/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import { useUpdateMealMutation } from '@features/meals/api/update-meal.ts'
-import { toaster } from '@components/ui/toaster.tsx'
-import { useMemo, useState } from 'react'
-import moment from 'moment'
-import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { useAppSelector } from '@store/hooks.ts'
-import { selectVendor } from '@features/auth/store'
+import moment from 'moment'
+import { useMemo, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { CategoriesSelector } from '@features/meals/components/categories-selector.tsx'
 import { HiUpload } from 'react-icons/hi'
 
 interface MealFormProps {

@@ -1,5 +1,5 @@
-import { eatupApi } from '@lib/api-slice.ts'
 import { CategoriesSchema, Category } from '@features/meals/types'
+import { eatupApi } from '@lib/api-slice.ts'
 import { PaginatedResponse } from '../../../types/api-types.ts'
 
 export const categories = eatupApi.injectEndpoints({
