@@ -4,6 +4,7 @@ import daMeals from '@features/meals/locale/da.json'
 import enMeals from '@features/meals/locale/en.json'
 import daOrders from '@features/orders/locale/da.json'
 import daStripe from '@features/stripe/locale/da.json'
+import enStripe from '@features/stripe/locale/en.json'
 import enOrders from '@features/orders/locale/en.json'
 import daCommon from '@locales/da/da.common.json'
 import daZod from '@locales/da/da.zod.json'
@@ -29,6 +30,7 @@ await i18next
         auth: enAuth,
         meals: enMeals,
         orders: enOrders,
+        stripe: enStripe,
         zod: enZod
       },
       da: {
