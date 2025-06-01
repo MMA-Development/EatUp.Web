@@ -17,11 +17,7 @@ export const MealSchema = z.object({
   categories: z.array(
     z.object({
       name: z.string(),
-      meals: z.array(z.object({})),
-      id: z.string().uuid(),
-      deletedAt: z.string().nullable(),
-      createdAt: z.string(),
-      updatedAt: z.string()
+      id: z.string().uuid()
     })
   )
 })
@@ -30,15 +26,14 @@ export type Meal = z.infer<typeof MealSchema>
 
 export const MealPayloadSchema = z
   .object({
-    vendorName: z.string(),
     title: z.string(),
     originalPrice: z.number().min(1),
     price: z.number().min(1),
     description: z.string(),
-    quantity: z.number().min(1),
+    quantity: z.number().min(1).catch(1),
     categories: z.array(z.string().uuid()),
     imageUrl: z.string().optional(),
-    maxOrderQuantity: z.number().min(1),
+    maxOrderQuantity: z.number().min(1).catch(1),
     firstAvailablePickup: z
       .string()
       .refine((val) => !isNaN(Date.parse(val)), { message: 'Ugyldig dato/tid' })

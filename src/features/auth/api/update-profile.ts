@@ -1,6 +1,6 @@
+import { vendor } from '@features/auth/api/get-vendor.ts'
 import { eatupApi } from '@lib/api-slice.ts'
 import { Profile } from '../types'
-import { vendor } from '@features/auth/api/get-vendor.ts'
 
 export const profile = eatupApi.injectEndpoints({
   endpoints: (builder) => ({

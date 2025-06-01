@@ -10,14 +10,11 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { toaster } from '@components/ui/toaster.tsx'
-import { selectVendor } from '@features/auth/store'
 import { useAddMealMutation } from '@features/meals/api/add-meal.ts'
-import { useLazyGetMealsQuery } from '@features/meals/api/get-meals.ts'
 import { useUpdateMealMutation } from '@features/meals/api/update-meal.ts'
 import { CategoriesSelector } from '@features/meals/components/categories-selector.tsx'
 import { Meal, MealPayload, MealPayloadSchema } from '@features/meals/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAppSelector } from '@store/hooks.ts'
 import moment from 'moment'
 import { useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -35,9 +32,6 @@ export function MealForm({ meal }: MealFormProps) {
 
   const [addMeal, { isLoading: isAdding }] = useAddMealMutation()
   const [updateMeal, { isLoading: isUpdating }] = useUpdateMealMutation()
-  const [refetchMeals] = useLazyGetMealsQuery()
-
-  const vendor = useAppSelector(selectVendor)
 
   const isEditing = !!meal?.id
   const isLoading = isAdding || isUpdating
@@ -110,7 +104,6 @@ export function MealForm({ meal }: MealFormProps) {
       })
     } finally {
       reset()
-      refetchMeals({ take: 10, skip: 0 })
       setSelectedFile(null)
     }
   }
@@ -123,8 +116,6 @@ export function MealForm({ meal }: MealFormProps) {
         </Stack>
 
         <Fieldset.Content>
-          <Input display={'none'} {...register('vendorName')} value={vendor!.name} />
-
           <Field.Root invalid={Boolean(errors.title)} required>
             <Field.Label>{t('title')}</Field.Label>
             <Input {...register('title')} />
@@ -189,11 +180,12 @@ export function MealForm({ meal }: MealFormProps) {
                 control={control}
                 render={({ field }) => (
                   <NumberInput.Root
+                    min={1}
                     disabled={field.disabled}
                     name={field.name}
-                    value={String(field.value)}
+                    value={field.value ? String(field.value) : String(1)}
                     onValueChange={({ valueAsNumber }) => {
-                      field.onChange(valueAsNumber)
+                      field.onChange(isNaN(valueAsNumber) ? 1 : valueAsNumber)
                     }}
                   >
                     <NumberInput.Control />
@@ -214,11 +206,12 @@ export function MealForm({ meal }: MealFormProps) {
                 control={control}
                 render={({ field }) => (
                   <NumberInput.Root
+                    min={1}
                     disabled={field.disabled}
                     name={field.name}
-                    value={String(field.value)}
+                    value={field.value ? String(field.value) : String(1)}
                     onValueChange={({ valueAsNumber }) => {
-                      field.onChange(valueAsNumber)
+                      field.onChange(isNaN(valueAsNumber) ? 1 : valueAsNumber)
                     }}
                   >
                     <NumberInput.Control />
@@ -239,11 +232,12 @@ export function MealForm({ meal }: MealFormProps) {
                 control={control}
                 render={({ field }) => (
                   <NumberInput.Root
+                    min={1}
                     disabled={field.disabled}
                     name={field.name}
-                    value={String(field.value)}
+                    value={field.value ? String(field.value) : String(1)}
                     onValueChange={({ valueAsNumber }) => {
-                      field.onChange(valueAsNumber)
+                      field.onChange(isNaN(valueAsNumber) ? 1 : valueAsNumber)
                     }}
                   >
                     <NumberInput.Control />
@@ -261,11 +255,12 @@ export function MealForm({ meal }: MealFormProps) {
                 control={control}
                 render={({ field }) => (
                   <NumberInput.Root
+                    min={1}
                     disabled={field.disabled}
                     name={field.name}
-                    value={String(field.value)}
+                    value={field.value ? String(field.value) : String(1)}
                     onValueChange={({ valueAsNumber }) => {
-                      field.onChange(valueAsNumber)
+                      field.onChange(isNaN(valueAsNumber) ? 1 : valueAsNumber)
                     }}
                   >
                     <NumberInput.Control />
