@@ -1,9 +1,10 @@
 import daAuth from '@features/auth/locale/da.json'
+import enAuth from '@features/auth/locale/en.json'
 import daMeals from '@features/meals/locale/da.json'
 import enMeals from '@features/meals/locale/en.json'
 import daOrders from '@features/orders/locale/da.json'
+import daStripe from '@features/stripe/locale/da.json'
 import enOrders from '@features/orders/locale/en.json'
-import enAuth from '@features/auth/locale/en.json'
 import daCommon from '@locales/da/da.common.json'
 import daZod from '@locales/da/da.zod.json'
 import enCommon from '@locales/en/en.common.json'
@@ -35,6 +36,7 @@ await i18next
         auth: daAuth,
         meals: daMeals,
         orders: daOrders,
+        stripe: daStripe,
         zod: daZod
       }
     },

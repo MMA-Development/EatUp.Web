@@ -1,21 +1,20 @@
-import moment from 'moment'
-import { useEffect, useState } from 'react'
 import { Chart, useChart } from '@chakra-ui/charts'
-import { Badge, Box, Card, HStack, IconButton, Skeleton, Stat } from '@chakra-ui/react'
-import { LuPackage } from 'react-icons/lu'
-import { Area, AreaChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { Box, Card, HStack, IconButton, Skeleton, Stat } from '@chakra-ui/react'
 import { useGetOrdersQuery } from '@features/orders/api/get-orders.ts'
 import { OrderResponse } from '@features/orders/types'
-import { CategoricalChartState } from 'recharts/types/chart/types'
+import moment from 'moment'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoRefresh } from 'react-icons/io5'
+import { LuPackage } from 'react-icons/lu'
+import { Area, AreaChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { CategoricalChartState } from 'recharts/types/chart/types'
 
 export function OrdersTodaySparkline() {
   const { t } = useTranslation('orders')
 
   const { data, isLoading, isError, refetch, isFetching } = useGetOrdersQuery()
   const [todayOrders, setTodayOrders] = useState<OrderResponse[]>([])
-  const yesterdaysOrders = 1
 
   useEffect(() => {
     if (data && data.items) {
@@ -46,7 +45,6 @@ export function OrdersTodaySparkline() {
   const lastIndex = chart.data.length - 1
   const [value, setValue] = useState(todayOrders.length)
   const [label, setLabel] = useState<string | undefined>(undefined)
-  const percentage = ((todayOrders.length - yesterdaysOrders) / yesterdaysOrders) * 100
 
   const onMouseMove = (state: CategoricalChartState) => {
     const index = state.activeTooltipIndex ?? lastIndex
@@ -84,17 +82,12 @@ export function OrdersTodaySparkline() {
               <Stat.ValueText>
                 {isLoading ? 'Loading...' : isError ? 'Error' : `${value}`}
               </Stat.ValueText>
-              <Badge colorPalette={percentage > 0 ? 'green' : 'red'} gap="0">
-                {percentage > 0 ? <Stat.UpIndicator /> : <Stat.DownIndicator />}
-                {percentage.toFixed(0)}%
-              </Badge>
               {label && (
                 <Box alignContent={'end'} ml={'auto'} textStyle="xs" color="fg.muted">
                   {label}
                 </Box>
               )}
             </HStack>
-            <Stat.HelpText>{t('since.yesterday')}</Stat.HelpText>
           </Stat.Root>
         </Card.Body>
         <Chart.Root height="10" chart={chart}>
