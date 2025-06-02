@@ -10,7 +10,7 @@ export function LoginScreen() {
         <LanguageSelector w={'200px'} />
         <ColorModeButton />
       </Stack>
-      <AbsoluteCenter w={'100%'}>
+      <AbsoluteCenter px={8} w={'100%'}>
         <LoginForm />
       </AbsoluteCenter>
     </Flex>

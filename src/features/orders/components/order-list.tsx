@@ -83,8 +83,10 @@ export function OrderList() {
               <Table.Cell>{order.paymentId}</Table.Cell>
               <Table.Cell>{order.price} kr.</Table.Cell>
               <Table.Cell cursor="help">
-                <Tooltip content={moment(order.createdAt).locale(language).format('LLLL')}>
-                  <span>{moment(order.createdAt).locale(language).fromNow()}</span>
+                <Tooltip
+                  content={moment.utc(order.createdAt).local().locale(language).format('LLLL')}
+                >
+                  <span>{moment.utc(order.createdAt).local().locale(language).fromNow()}</span>
                 </Tooltip>
               </Table.Cell>
             </Table.Row>
