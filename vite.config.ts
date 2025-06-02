@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import { PluginOptions } from 'babel-plugin-react-compiler'
 
 const ReactCompilerConfig: Partial<PluginOptions> = {}
@@ -9,7 +8,6 @@ const ReactCompilerConfig: Partial<PluginOptions> = {}
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
