@@ -103,7 +103,9 @@ export function MealForm({ meal }: MealFormProps) {
         type: 'error'
       })
     } finally {
-      reset()
+      if (!isEditing) {
+        reset()
+      }
       setSelectedFile(null)
     }
   }
@@ -289,7 +291,7 @@ export function MealForm({ meal }: MealFormProps) {
 
         <HStack>
           <Button size={'sm'} type="submit" alignSelf="flex-start" loading={isLoading}>
-            {t('create')}
+            {isEditing ? t('edit') : t('create')}
           </Button>
         </HStack>
       </Fieldset.Root>
