@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { PaginatedResponseSchema } from '../../../types/api-types.ts'
+import { PaginatedResponseSchema } from '@app-types/api-types.ts'
 
 export const MealSchema = z.object({
   id: z.string(),

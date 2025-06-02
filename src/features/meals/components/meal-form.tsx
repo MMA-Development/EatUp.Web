@@ -143,7 +143,7 @@ export function MealForm({ meal }: MealFormProps) {
               )}
             />
             <Field.ErrorText></Field.ErrorText>
-            <Field.HelperText>Giv din måltidspakke en ellere flere kategorier</Field.HelperText>
+            <Field.HelperText>{t('category.description')}</Field.HelperText>
           </Field.Root>
 
           <Field.Root>
@@ -290,9 +290,6 @@ export function MealForm({ meal }: MealFormProps) {
         <HStack>
           <Button size={'sm'} type="submit" alignSelf="flex-start" loading={isLoading}>
             {t('create')}
-          </Button>
-          <Button size={'sm'} variant={'outline'}>
-            Opret skabelon
           </Button>
         </HStack>
       </Fieldset.Root>

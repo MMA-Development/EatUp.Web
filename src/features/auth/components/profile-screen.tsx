@@ -11,9 +11,12 @@ import { useColorMode } from '@components/ui/color-mode.tsx'
 import { useEffect, useState } from 'react'
 import { reverseGeocode } from '@features/map/api/reverse-geocode.ts'
 import { useAppDispatch } from '@store/hooks.ts'
+import { useTranslation } from 'react-i18next'
 
 export function ProfileScreen() {
   const dispatch = useAppDispatch()
+
+  const { t } = useTranslation('auth')
 
   const { colorMode } = useColorMode()
   const { data } = useLoaderData({ from: '/dashboard/profile' })
@@ -118,7 +121,7 @@ export function ProfileScreen() {
         <input type="hidden" {...register('latitude')} />
         <input type="hidden" {...register('longitude')} />
         <Button size={'sm'} type="submit" alignSelf="flex-start" loading={isLoading}>
-          Opdater profil
+          {t('update.profile')}
         </Button>
       </Fieldset.Root>
     </form>

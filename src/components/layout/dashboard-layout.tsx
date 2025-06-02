@@ -129,14 +129,14 @@ export function DashboardLayout() {
 
         <Stack my={2}>
           <Text textStyle={'xs'} color={'fg.muted'} display={sidebarCollapsed ? 'none' : 'flex'}>
-            Måltids håndtering
+            {t('meal.management')}
           </Text>
           <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
             <Accordion.Item value={'meal'}>
               <Tooltip
                 positioning={{ placement: 'right' }}
                 openDelay={sidebarCollapsed ? 50 : 500}
-                content={'Måltider'}
+                content={t('meals')}
               >
                 <Accordion.ItemTrigger asChild w={'100%'}>
                   <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
@@ -144,7 +144,7 @@ export function DashboardLayout() {
                       <LuSalad />
                     </Icon>
                     <Span display={sidebarCollapsed ? 'none' : 'flex'} textStyle={'sm'}>
-                      Måltider
+                      {t('meals')}
                     </Span>
                     <Accordion.ItemIndicator
                       display={sidebarCollapsed ? 'none' : 'flex'}
@@ -176,14 +176,14 @@ export function DashboardLayout() {
         </Stack>
         <Stack my={2}>
           <Text textStyle={'xs'} color={'fg.muted'} display={sidebarCollapsed ? 'none' : 'flex'}>
-            Order håndtering
+            {t('order.management')}
           </Text>
           <Accordion.Root variant={'plain'} collapsible defaultValue={['info']}>
             <Accordion.Item value={'meal'}>
               <Tooltip
                 positioning={{ placement: 'right' }}
                 openDelay={sidebarCollapsed ? 50 : 500}
-                content={'Ordre'}
+                content={t('orders')}
               >
                 <Accordion.ItemTrigger asChild w={'100%'}>
                   <Button w={'100%'} size={'sm'} variant={'ghost'} justifyContent={'flex-start'}>
@@ -191,7 +191,7 @@ export function DashboardLayout() {
                       <LuPackage />
                     </Icon>
                     <Span display={sidebarCollapsed ? 'none' : 'flex'} textStyle={'sm'}>
-                      Ordre
+                      {t('orders')}
                     </Span>
                     <Accordion.ItemIndicator
                       display={sidebarCollapsed ? 'none' : 'flex'}

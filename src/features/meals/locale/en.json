@@ -20,5 +20,6 @@
   "more.options": "More options",
   "select.category": "Choose a category",
   "image": "Image",
-  "available": "Available"
+  "available": "Available",
+  "category.description": "Give your meal on or more categories"
 }

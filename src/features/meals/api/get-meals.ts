@@ -4,7 +4,7 @@ import {
   ApiPaginationWithSearch,
   PaginatedResponse,
   PaginatedResponseSchema
-} from '../../../types/api-types.ts'
+} from '@app-types/api-types.ts'
 
 export const meals = eatupApi.injectEndpoints({
   endpoints: (builder) => ({

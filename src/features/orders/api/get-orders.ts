@@ -3,7 +3,7 @@ import {
   ApiPaginationWithSearch,
   PaginatedResponse,
   PaginatedResponseSchema
-} from '../../../types/api-types.ts'
+} from '@app-types/api-types.ts'
 import { OrderResponse, OrderResponseSchema } from '@features/orders/types'
 
 export const orders = eatupApi.injectEndpoints({

@@ -36,5 +36,8 @@
   "meals": "Måltider",
   "create": "Opret",
   "orders": "Ordre",
-  "statistics": "Statestik"
+  "statistics": "Statestik",
+  "meal.management": "Måltids håndtering",
+  "order.management": "Ordre håndtering"
+
 }
