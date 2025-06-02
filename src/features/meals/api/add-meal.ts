@@ -8,9 +8,14 @@ export const meals = eatupApi.injectEndpoints({
         url: '/meals',
         method: 'POST',
         body
-      })
+      }),
+      invalidatesTags: (result) => [
+        { type: 'Meals', id: 'LIST' },
+        { type: 'Meals', id: result }
+      ]
     })
-  })
+  }),
+  overrideExisting: true
 })
 
 export const { useAddMealMutation } = meals
