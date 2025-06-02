@@ -66,7 +66,7 @@ export function OrderList() {
               </Table.Cell>
               <Table.Cell>{order.userName}</Table.Cell>
               <Table.Cell>
-                <CustomLink to={'/dashboard/meals/$id'} params={{ id: order.foodPackageId }}>
+                <CustomLink to={'/dashboard/orders/$id'} params={{ id: order.foodPackageId }}>
                   {order.foodPackageTitle}
                 </CustomLink>
               </Table.Cell>
@@ -98,7 +98,7 @@ export function OrderList() {
         mt={4}
         onPageChange={(page) =>
           navigate({
-            to: '/dashboard/meals',
+            to: '/dashboard/orders',
             search: (old) => ({ ...old, skip: (page.page - 1) * take }),
             replace: true
           })
@@ -141,7 +141,7 @@ export function OrderList() {
             defaultValue={[String(take)]}
             onValueChange={(e) => {
               void navigate({
-                to: '/dashboard/meals',
+                to: '/dashboard/orders',
                 search: (old) => ({ ...old, take: Number(e.value[0]) }),
                 replace: true
               })
