@@ -4,5 +4,6 @@ import { baseQueryWithValidation } from '@lib/base-query.ts'
 export const eatupApi = createApi({
   reducerPath: 'eatUp.api',
   baseQuery: baseQueryWithValidation,
-  endpoints: () => ({})
+  endpoints: () => ({}),
+  tagTypes: ['Meals']
 })

@@ -24,7 +24,14 @@ export const meals = eatupApi.injectEndpoints({
       },
       extraOptions: {
         dataSchema: PaginatedResponseSchema(MealSchema)
-      }
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              { type: 'Meals' as const, id: 'LIST' },
+              ...result.items.map((meal) => ({ type: 'Meals' as const, id: meal.id }))
+            ]
+          : [{ type: 'Meals' as const, id: 'LIST' }]
     })
   })
 })

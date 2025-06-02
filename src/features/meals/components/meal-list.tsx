@@ -107,7 +107,7 @@ export function MealList() {
                           value="delete"
                           color="fg.error"
                           _hover={{ bg: 'bg.error', color: 'fg.error' }}
-                          onClick={() => remove(meal.id)}
+                          onClick={async () => await remove(meal.id)}
                         >
                           <Box flex="1">{t('delete')}</Box>
                         </Menu.Item>
