@@ -29,6 +29,8 @@ const limitList = createListCollection({
 })
 
 export function OrderList() {
+  const { t } = useTranslation('orders')
+
   const navigate = useNavigate()
 
   const {
@@ -45,13 +47,13 @@ export function OrderList() {
       <Table.Root size="sm">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader>Ordre nr.</Table.ColumnHeader>
-            <Table.ColumnHeader>Bruger</Table.ColumnHeader>
-            <Table.ColumnHeader>Måltidspakke</Table.ColumnHeader>
-            <Table.ColumnHeader>Betalingsstatus</Table.ColumnHeader>
-            <Table.ColumnHeader>Betalings id</Table.ColumnHeader>
-            <Table.ColumnHeader>Pris</Table.ColumnHeader>
-            <Table.ColumnHeader>Oprettet</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('order.number')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('user')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('meal')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('payment.status')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('payment.id')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('price')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('order.created')}</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>

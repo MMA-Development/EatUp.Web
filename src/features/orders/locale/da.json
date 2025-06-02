@@ -1,4 +1,13 @@
 {
   "todays.orders": "Dagens ordre",
-  "since.yesterday": "Siden i går"
+  "since.yesterday": "Siden i går",
+  "refresh": "Genopfrisk",
+  "search": "Søg",
+  "order.number": "Order nr.",
+  "user": "Bruger",
+  "meal": "Måltid",
+  "payment.status": "Betalings status",
+  "payment.id": "Betalings id",
+  "price": "Pris",
+  "order.created": "Oprettet"
 }

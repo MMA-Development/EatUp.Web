@@ -125,7 +125,7 @@ export function SignupForm() {
           <Fieldset.HelperText>{t('signup.description')}</Fieldset.HelperText>
         </Stack>
 
-        <Fieldset.Content>
+        <Fieldset.Content mt={2}>
           <Stack direction={'row'}>
             <Field.Root required invalid={Boolean(errors.name)}>
               <Field.Label>{t('name')}</Field.Label>
@@ -176,7 +176,7 @@ export function SignupForm() {
                 <FileUpload.HiddenInput />
                 <FileUpload.Trigger asChild>
                   <Button variant="outline">
-                    <HiUpload /> Upload file
+                    <HiUpload /> {t('upload.file')}
                   </Button>
                 </FileUpload.Trigger>
                 <FileUpload.ItemGroup>

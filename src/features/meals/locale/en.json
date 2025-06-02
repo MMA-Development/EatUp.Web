@@ -21,5 +21,6 @@
   "select.category": "Choose a category",
   "image": "Image",
   "available": "Available",
-  "category.description": "Give your meal on or more categories"
+  "category.description": "Give your meal on or more categories",
+  "upload.file": "Upload file"
 }

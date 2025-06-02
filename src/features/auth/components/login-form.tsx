@@ -66,7 +66,7 @@ export function LoginForm() {
           </Button>
           <Separator orientation="vertical" h={8} />
           <Text>
-            Ikke oprettet endnu? Opret dig{' '}
+            {t('not.a.member.description')}&nbsp;
             <CustomLink colorPalette={'blue'} to={'/auth/signup'}>
               her.
             </CustomLink>

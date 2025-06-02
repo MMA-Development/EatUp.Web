@@ -21,5 +21,6 @@
   "select.category": "Vælg kategori",
   "image": "Billede",
   "available": "Tilbage",
-  "category.description": "Giv din måltidspakke en ellere flere kategorier\n"
+  "category.description": "Giv din måltidspakke en ellere flere kategorier\n",
+  "upload.file": "Upload fil"
 }

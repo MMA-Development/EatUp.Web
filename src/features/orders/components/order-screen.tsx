@@ -8,11 +8,13 @@ import { IoRefresh } from 'react-icons/io5'
 import { Tooltip } from '@components/ui/tooltip.tsx'
 import { useGetOrdersQuery } from '@features/orders/api/get-orders.ts'
 import { OrderList } from '@features/orders/components/order-list.tsx'
+import { useTranslation } from 'react-i18next'
 
 export function OrderScreen() {
   const navigate = useNavigate()
-
   const inputRef = useInputFocusHotkey()
+
+  const { t } = useTranslation('orders')
 
   const { query, skip, take } = useSearch({ from: '/dashboard/orders' })
   const { refetch, isFetching } = useGetOrdersQuery({ skip, take, query })
@@ -40,11 +42,11 @@ export function OrderScreen() {
             defaultValue={query}
             size={'sm'}
             type="text"
-            placeholder={'search'}
-            aria-label={'search'}
+            placeholder={t('search')}
+            aria-label={t('search')}
           />
         </InputGroup>
-        <Tooltip content={'refresh data'}>
+        <Tooltip content={t('refresh')}>
           <Button
             w={'36px'}
             h={'36px'}
@@ -52,7 +54,7 @@ export function OrderScreen() {
             onClick={refetch}
             variant={'outline'}
             size={'sm'}
-            aria-label={'refresh'}
+            aria-label={t('refresh')}
           >
             <IoRefresh />
           </Button>

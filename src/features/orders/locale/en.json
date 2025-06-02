@@ -1,4 +1,13 @@
 {
   "todays.orders": "Today's order",
-  "since.yesterday": "Since yesterday"
+  "since.yesterday": "Since yesterday",
+  "refresh": "Refresh",
+  "search": "Search",
+  "order.number": "Order No.",
+  "user": "User",
+  "meal": "Meal",
+  "payment.status": "Payment Status",
+  "payment.id": "Payment ID",
+  "price": "Price",
+  "order.created": "Created"
 }

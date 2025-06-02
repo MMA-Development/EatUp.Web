@@ -162,7 +162,7 @@ export function MealForm({ meal }: MealFormProps) {
                 <FileUpload.HiddenInput />
                 <FileUpload.Trigger asChild>
                   <Button variant="outline">
-                    <HiUpload /> Upload file
+                    <HiUpload /> {t('upload.file')}
                   </Button>
                 </FileUpload.Trigger>
                 <FileUpload.ItemGroup>
