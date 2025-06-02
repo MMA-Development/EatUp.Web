@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@store/hooks.ts'
 import { logout, selectToken, selectUser } from '@features/auth/store'
-import { Avatar, Button, Menu, Portal, useBreakpointValue } from '@chakra-ui/react'
+import { Avatar, Button, Menu, Portal, Text } from '@chakra-ui/react'
 import { useNavigate } from '@tanstack/react-router'
 import { useSignoutMutation } from '@features/auth/api/signout.ts'
 import { useTranslation } from 'react-i18next'
+import { selectSidebarCollapsed } from '@features/ui/store'
 
 export function UserMenu() {
   const { t } = useTranslation('auth')
@@ -15,7 +16,7 @@ export function UserMenu() {
 
   const [signout] = useSignoutMutation()
 
-  const mobile = useBreakpointValue({ base: true, md: false })
+  const sidebarCollapsed = useAppSelector(selectSidebarCollapsed)
 
   async function handleLogout() {
     if (!token) {
@@ -32,12 +33,12 @@ export function UserMenu() {
   return (
     <Menu.Root positioning={{ sameWidth: true }}>
       <Menu.Trigger asChild>
-        <Button justifyContent={'flex-start'} variant="outline" size="sm">
+        <Button justifyContent={'flex-start'} variant="outline" size="xs">
           <Avatar.Root size={'2xs'}>
             <Avatar.Fallback />
             <Avatar.Image />
           </Avatar.Root>
-          {!mobile && user}
+          <Text>{!sidebarCollapsed && user}</Text>
         </Button>
       </Menu.Trigger>
       <Portal>

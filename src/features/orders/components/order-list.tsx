@@ -91,8 +91,7 @@ export function OrderList() {
       </Table.Root>
 
       <Pagination.Root
-        bottom={4}
-        position={'absolute'}
+        mt={4}
         onPageChange={(page) =>
           navigate({
             to: '/dashboard/meals',

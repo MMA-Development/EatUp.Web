@@ -5,7 +5,7 @@ import { BalanceTransactionsSparkline } from '@features/stripe/components/balanc
 export function Dashboard() {
   return (
     <Flex direction={'column'} gap={4}>
-      <SimpleGrid minChildWidth="sm" gap="40px">
+      <SimpleGrid minChildWidth="2xs" gap="40px">
         <OrdersTodaySparkline />
         <BalanceTransactionsSparkline />
       </SimpleGrid>
